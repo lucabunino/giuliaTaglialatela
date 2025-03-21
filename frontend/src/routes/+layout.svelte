@@ -57,6 +57,7 @@ function handleKey({key}) {if (key === 'G' && dev) {viewGrid = !viewGrid}}
 
 
 <div style="--hoverColor:{data.settings.hoverColor.hex}">
+{#if domLoaded}
 <header class="honeymoon-120">
   <nav>
     <ul class="menu" class:open={menuOpen}>
@@ -99,6 +100,7 @@ function handleKey({key}) {if (key === 'G' && dev) {viewGrid = !viewGrid}}
     </button>
   </nav>
 </header>
+{/if}
 
 {#if domLoaded}
   <main>
@@ -222,6 +224,7 @@ main {
 footer {
   display: flex;
   justify-content: center;
+  margin-bottom: 2em;
 }
 
 
