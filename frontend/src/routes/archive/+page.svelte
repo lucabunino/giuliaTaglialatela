@@ -103,10 +103,10 @@ $effect(() => {
 .row label {
   position: fixed;
 }
-.row label:nth-child(1) {grid-column: 4 / span 2;}
-.row label:nth-child(2) {grid-column: 6 / span 3;}
-.row label:nth-child(3) {grid-column: 9 / span 1;justify-self: right;}
-.row label:nth-child(4) {grid-column: 10 / span 3;}
+.row label:nth-child(1) {margin-left: calc((100% - var(--margin)*2 - var(--gutter)*11)/12*3 + var(--gutter)*3);}
+.row label:nth-child(2) {margin-left: calc((100% - var(--margin)*2 - var(--gutter)*11)/12*5 + var(--gutter)*5);}
+.row label:nth-child(3) {margin-left: calc((100% - var(--margin)*2 - var(--gutter)*11)/12*9 + var(--gutter)*8); transform: translateX(-100%);}
+.row label:nth-child(4) {margin-left: calc((100% - var(--margin)*2 - var(--gutter)*11)/12*9 + var(--gutter)*9);}
 
 .row>*, .row>*>* {
   white-space: nowrap;
@@ -145,10 +145,10 @@ $effect(() => {
   visibility: hidden;
 }
 @media screen and (max-width: 900px) {
-  .row label:nth-child(1) {grid-column: 1 / span 3;}
-  .row label:nth-child(2) {grid-column: 4 / span 4;}
-  .row label:nth-child(3) {grid-column: 8 / span 1;justify-self: right;}
-  .row label:nth-child(4) {grid-column: 9 / span 4;}
+  .row label:nth-child(1) {margin-left: 0;}
+  .row label:nth-child(2) {margin-left: calc((100% - var(--margin)*2 - var(--gutter)*11)/12*3 + var(--gutter)*3);}
+  .row label:nth-child(3) {margin-left: calc((100% - var(--margin)*2 - var(--gutter)*11)/12*8 + var(--gutter)*7);}
+  .row label:nth-child(4) {margin-left: calc((100% - var(--margin)*2 - var(--gutter)*11)/12*8 + var(--gutter)*8);}
 
   .row>.client {
     grid-column: 1 / span 3;
@@ -193,9 +193,8 @@ $effect(() => {
   .row:nth-child(1) {
     margin-top: calc(var(--margin)*2);
   }
-  .row label:nth-child(1) {grid-column: 1 / span 2;}
-  .row label:nth-child(2) {grid-column: 3 / span 5;}
-  .row label:nth-child(3) {grid-column: 8 / span 1;justify-self: right;}
+  .row label:nth-child(2) {margin-left: calc((100% - var(--margin)*2 - var(--gutter)*7)/8*2 + var(--gutter)*2);}
+  .row label:nth-child(3) {margin-left: calc((100% - var(--margin)*2 - var(--gutter)*7)/8*8 + var(--gutter)*7);}
   .row label:nth-child(4) {display: none;}
 
   .row>.client {
@@ -225,8 +224,8 @@ $effect(() => {
   }
 }
 @media screen and (max-width: 320px) {
-  .row label:nth-child(2) {grid-column: 3 / span 4;}
-  .row label:nth-child(3) {grid-column: 7 / span 2;}
+  .row label:nth-child(2) {margin-left: calc((100% - var(--margin)*2 - var(--gutter)*7)/8*2 + var(--gutter)*2);}
+  .row label:nth-child(3) {margin-left: calc((100% - var(--margin)*2 - var(--gutter)*7)/8*8 + var(--gutter)*7);}
   .row>.project {
     grid-column: 3 / span 4;
   }
