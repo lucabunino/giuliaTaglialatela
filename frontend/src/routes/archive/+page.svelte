@@ -10,6 +10,7 @@ let img = $derived(projectHover.preview)
 let canvasWidth = $state()
 let canvasHeight = $state()
 let innerWidth = $state()
+let domLoaded = $state(false)
 
 // Imports
 import Pixi from '$lib/components/Pixi.svelte'
@@ -23,6 +24,10 @@ function mobileClick(event) {
     event.preventDefault()
   }
 }
+
+$effect(() => {
+  domLoaded = true
+})
 </script>
 
 <svelte:window bind:innerWidth></svelte:window>
@@ -55,6 +60,7 @@ function mobileClick(event) {
   {/if}
   {/each}
   <img class="target" src={urlFor(img).width(1080)} alt="" bind:clientWidth={canvasWidth} bind:clientHeight={canvasHeight} style="aspect-ratio: {img.asset.metadata.dimensions.aspectRatio}">
+  {#if domLoaded}
     {#key img}
       <div
       class="preview"
@@ -64,6 +70,7 @@ function mobileClick(event) {
         <Pixi displaceImages={displaceImages} projectHover={projectHover} canvasWidth={canvasWidth} canvasHeight={canvasHeight}/>
       </div>
     {/key}
+  {/if}
 </section>
 
 <style>

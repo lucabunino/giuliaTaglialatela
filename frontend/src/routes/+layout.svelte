@@ -250,6 +250,11 @@ function handleKey({key}) {if (key === 'G' && dev) {viewGrid = !viewGrid}}
 main {
   min-height: calc(100vh - 3rem);
 }
+@media screen and (max-width: 700px) {
+  main {
+    min-height: calc(100vh - 3rem - 15vw);
+  }
+}
 
 /* Footer */
 footer {
