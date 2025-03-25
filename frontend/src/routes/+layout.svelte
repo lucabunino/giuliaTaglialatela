@@ -8,6 +8,7 @@ import "../app.css";
 import { dev } from '$app/environment';
 import { page } from '$app/stores';
 import { urlFor } from '$lib/utils/image';
+import { fade } from "svelte/transition";
 
 // Variables
 let domLoaded = $state(false)
@@ -103,13 +104,23 @@ function handleKey({key}) {if (key === 'G' && dev) {viewGrid = !viewGrid}}
 {/if}
 
 {#if domLoaded}
-  <main>
-    {@render children()}
-  </main>
+  {#key data.pathname}
+    <main
+    in:fade|global={{ duration: 400, delay: 400 }}
+    out:fade|global={{ duration: 400, delay: 0}}>
+      {@render children()}
+    </main>
+  {/key}
 {/if}
 
 {#if domLoaded && ($page.url.pathname !== "/" || innerWidth <= 700)}
-  <footer>© Giulia Taglialela, 2025</footer>
+  {#key data.pathname}
+    <footer
+    in:fade|global={{ duration: 200, delay: 200 }}
+    out:fade|global={{ duration: 200, delay: 0}}>
+      <p>© Giulia Taglialela, 2025</p>
+    </footer>
+  {/key}
 {/if}
 </div>
   
@@ -143,6 +154,9 @@ function handleKey({key}) {if (key === 'G' && dev) {viewGrid = !viewGrid}}
 .menu.open a {
   opacity: 1;
   pointer-events: all;
+}
+.menu-item a.active {
+  display: contents;
 }
 .menu-item.menu-ig {
   display: flex;
@@ -249,11 +263,7 @@ function handleKey({key}) {if (key === 'G' && dev) {viewGrid = !viewGrid}}
 /* Main */
 main {
   min-height: calc(100vh - 3rem);
-}
-@media screen and (max-width: 700px) {
-  main {
-    min-height: calc(100vh - 3rem - 15vw);
-  }
+  min-height: calc(100svh - 3rem);
 }
 
 /* Footer */
@@ -261,5 +271,7 @@ footer {
   display: flex;
   justify-content: center;
   margin-bottom: 2em;
+  z-index: 2;
+  position: relative;
 }
 </style>

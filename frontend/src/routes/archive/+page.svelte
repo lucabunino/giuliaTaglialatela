@@ -50,24 +50,27 @@ $effect(() => {
       <p class="year">{project.date.split('-')[0]}</p>
     </a>
   {:else}
-  <div class="row hoverColor" class:mobileActive={i === index} onmouseover={() => index = i}>
+  <button class="row hoverColor" class:mobileActive={i === index} onmouseover={() => index = i}>
     <p class="client">{project.client.title}</p>
     <div class="project">
       <p>{project.title}</p>
     </div>
     <p class="year">{project.date.split('-')[0]}</p>
-  </div>
+  </button>
   {/if}
   {/each}
-  <img class="target" src={urlFor(img).width(1080)} alt="" bind:clientWidth={canvasWidth} bind:clientHeight={canvasHeight} style="aspect-ratio: {img.asset.metadata.dimensions.aspectRatio}">
+  <img class="target" src={urlFor(img).width(1080)} alt={img.asset.altText} bind:clientWidth={canvasWidth} bind:clientHeight={canvasHeight} style="aspect-ratio: {img.asset.metadata.dimensions.aspectRatio}">
   {#if domLoaded}
     {#key img}
       <div
       class="preview"
       style="aspect-ratio: {img.asset.metadata.dimensions.aspectRatio}"
-      in:fade={{ duration: 200 }}
-      out:fade={{ duration: 200 }}>
+      in:fade|global={{ duration: 50, delay: 50 }}
+      out:fade|global={{ duration: 50, delay: 50}}>
         <Pixi displaceImages={displaceImages} projectHover={projectHover} canvasWidth={canvasWidth} canvasHeight={canvasHeight}/>
+        {#if projectHover.singlePaged}
+          <a class="mobile-only view-project" href="archive/{projectHover.slug.current}">View project</a>
+        {/if}
       </div>
     {/key}
   {/if}
@@ -129,13 +132,14 @@ $effect(() => {
 }
 .preview, .target {
   position: fixed;
-  width: -webkit-fill-available;
-  margin-right: var(--margin);
+  width: calc((100% - var(--margin)*2 - var(--gutter)*11)/12*3 + var(--gutter)*2);
+  top: calc(13em + 3.431em);
+  right: var(--margin);
   height: auto;
   overflow: visible;
   grid-column: 10 / span 3;
   grid-row: 2;
-  mix-blend-mode: multiply;
+  z-index: 1;
 }
 .target {
   visibility: hidden;
@@ -159,9 +163,23 @@ $effect(() => {
   }
   .preview, .target {
     grid-column: 9 / span 4;
+    width: calc((100% - var(--margin)*2 - var(--gutter)*11)/12*4 + var(--gutter)*3);
+    top: unset;
   }
 }
 @media screen and (max-width: 700px) {
+  .view-project {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: auto;
+    text-align: center;
+    z-index: 2;
+    background-color: var(--white);
+    padding: .3em 1em .5em;
+    border-radius: 1em;
+  }
   .mobileActive {
     color: var(--hoverColor);
   }
@@ -170,6 +188,10 @@ $effect(() => {
   }
   .row {
     grid-template-columns: repeat(8, 1fr);
+    z-index: 2;
+  }
+  .row:nth-child(1) {
+    margin-top: calc(var(--margin)*2);
   }
   .row label:nth-child(1) {grid-column: 1 / span 2;}
   .row label:nth-child(2) {grid-column: 3 / span 5;}
@@ -191,8 +213,15 @@ $effect(() => {
     display: none;
   }
   .preview, .target {
-    grid-column: 6 / span 4;
+    width: calc((100% - var(--margin)*2 - var(--gutter)*7)/8*4 + var(--gutter)*3);
+    grid-column: 4 / span 4;
     bottom: var(--margin);
+  }
+}
+@media screen and (max-width: 500px) {
+  .preview, .target {
+    width: calc((100% - var(--margin)*2 - var(--gutter)*7)/8*5 + var(--gutter)*4);
+    grid-column: 3 / span 5;
   }
 }
 @media screen and (max-width: 320px) {

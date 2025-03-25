@@ -4,6 +4,7 @@
 
   let res = 2
   let domLoaded = $state(false)
+  let domVisible = $state(false)
   let pixi = $state(false);
   let app = $state();
   let canvas = $state();
@@ -103,6 +104,9 @@
     setTimeout(() => {
       domLoaded = true
     }, 50);
+    setTimeout(() => {
+      domVisible = true
+    }, 0);
     if (!pixi && domLoaded) {
       pixi = renderPixi();
     }
@@ -123,6 +127,7 @@
   <div
     id="canvas"
     bind:this={canvas}
+    class:hidden={!domVisible}
     style="aspect-ratio: {projectHover.preview.asset.metadata.dimensions.aspectRatio};"
   ></div>
   
@@ -130,6 +135,10 @@
   #canvas {
     width: 100%;
     height: auto;
+    opacity: 1;
+  }
+  #canvas.hidden {
+    opacity: 0;
   }
   </style>
   
