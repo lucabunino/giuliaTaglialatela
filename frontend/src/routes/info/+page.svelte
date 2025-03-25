@@ -35,7 +35,8 @@ $effect(() => {
   padding: 11em var(--margin);
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  gap: calc(var(--gutter)/2);
+  column-gap: var(--gutter);
+  row-gap: calc(var(--gutter)/2);
 }
 p {
   grid-column: 1 / span 6;
@@ -46,6 +47,31 @@ div {
   gap: calc(var(--gutter)/2);
 }
 img {
-  width: 30%;
+  width: calc((100% - var(--gutter)*2)/3);
+}
+
+@media screen and (max-width: 1100px) {
+  p {
+    grid-column: 1 / span 8;
+  }
+  div {
+    grid-column: 1 / span 8;
+  }
+  img {
+    width: calc((100% - var(--gutter))/2);
+  }
+}
+
+@media screen and (max-width: 700px) {
+  #info {
+    padding: 37vw var(--margin) 15vw;
+  }
+  p {
+    grid-column: 1 / span 12;
+  }
+  div {
+    grid-column: 1 / span 12;
+    gap: var(--gutter);
+  }
 }
 </style>

@@ -34,8 +34,8 @@ function handleKey({key}) {if (key === 'G' && dev) {viewGrid = !viewGrid}}
 
 {#if viewGrid}
 <div id="layout"
-      style="grid-template-columns:repeat({innerWidth > 800 ? gridColumnsDesktop : gridColumnsMobile}, 1fr);pointer-events:none;display: grid;position:fixed; z-index:999;width: -moz-available;width: -webkit-fill-available;height: -moz-available;height: -webkit-fill-available;margin:0 var(--margin);gap:var(--gutter);opacity:.2;">
-  {#each Array(innerWidth > 800 ? gridColumnsDesktop : gridColumnsMobile) as _, i}
+      style="grid-template-columns:repeat({innerWidth > 700 ? gridColumnsDesktop : gridColumnsMobile}, 1fr);pointer-events:none;display: grid;position:fixed; z-index:999;width: -moz-available;width: -webkit-fill-available;height: -moz-available;height: -webkit-fill-available;margin:0 var(--margin);gap:var(--gutter);opacity:.2;">
+  {#each Array(innerWidth > 700 ? gridColumnsDesktop : gridColumnsMobile) as _, i}
     <div style="background-color:red"></div>
   {/each}
 </div>
@@ -62,7 +62,7 @@ function handleKey({key}) {if (key === 'G' && dev) {viewGrid = !viewGrid}}
   <nav>
     <ul class="menu" class:open={menuOpen}>
       <li class="menu-item">
-        <a href="/" class="active" onclick={(e) => {menuOpen = false}}><span class="logo page-active">G</span><span class="menu-active">iulia</span> <span class="logo page-active">T</span><span class="menu-active">aglialatela</span></a></li>
+        <a href="/" class="active" onclick={(e) => {menuOpen = false}}><span class="logo page-active">G</span><span class="menu-active">iulia</span> <br class="mobile-only"><span class="logo page-active">T</span><span class="menu-active">aglialatela</span></a></li>
       <div>
         <li class="menu-item">
           <a href="/commercial" class:active={$page.url.pathname === "/commercial"} onclick={(e) => {menuOpen = false}}><span class="page-active">C</span><span class="menu-active">ommercial</span></a>
@@ -108,7 +108,7 @@ function handleKey({key}) {if (key === 'G' && dev) {viewGrid = !viewGrid}}
   </main>
 {/if}
 
-{#if domLoaded && $page.url.pathname !== "/"}
+{#if domLoaded && ($page.url.pathname !== "/" || innerWidth <= 700)}
   <footer>© Giulia Taglialela, 2025</footer>
 {/if}
 </div>
@@ -133,7 +133,7 @@ function handleKey({key}) {if (key === 'G' && dev) {viewGrid = !viewGrid}}
   pointer-events: all;
 }
 .menu-item {
-  margin-left: -.15em;
+  margin: 0 -.15em;
 }
 .menu:not(.open) .menu-item a {
   opacity: 0;
@@ -150,7 +150,7 @@ function handleKey({key}) {if (key === 'G' && dev) {viewGrid = !viewGrid}}
   align-items: center;
 }
 .menu-item.menu-ig svg {
-  margin-right: var(--margin);
+  margin-right: calc(var(--margin) + .15em);
   width: 7vw;
   fill: var(--black);
 }
@@ -176,6 +176,22 @@ function handleKey({key}) {if (key === 'G' && dev) {viewGrid = !viewGrid}}
 .page-active::after {content: "…";position: absolute;}
 .page-active.logo::after {content: ".";}
 .open .page-active::after {opacity: 0;pointer-events: none;}
+
+@media screen and (max-width: 700px) {
+  .menu {
+    padding: var(--margin) 0 calc(var(--margin)*2);
+  }
+  .menu-item {
+    margin: 0 -.25em;
+  }
+  .menu-item.menu-ig svg {
+    margin-right: calc(var(--margin) + .25em);
+    width: 14vw;
+  }
+  .menu-item.menu-ig .st1 {
+    stroke-width: 0.02vw;
+  }
+}
 
 /* Menu switch */
 .menu-switch {
@@ -215,6 +231,17 @@ function handleKey({key}) {if (key === 'G' && dev) {viewGrid = !viewGrid}}
   background-color: var(--hoverColor);
 }
 
+@media screen and (max-width: 700px) {
+  .menu-switch {
+    top: calc(.55em - var(--margin));
+    width: calc(20vw + var(--margin)*2);
+    height: calc(5vw + var(--margin)*2);
+  }
+  .line {
+    height: .2vw;
+  }
+}
+
 /* Main */
 main {
   min-height: calc(100vh - 3rem);
@@ -225,24 +252,5 @@ footer {
   display: flex;
   justify-content: center;
   margin-bottom: 2em;
-}
-
-
-@media screen and (max-width: 900px) {
-  svg {
-    width: 6rem;
-  }
-  footer {
-    flex-direction: column;
-    align-items: flex-start;
-    padding-bottom: 1em;
-  }
-  footer div {
-    display: flex;
-    flex-direction: column;
-  }
-  footer div>*:nth-child(even) {
-    margin-bottom: 1.5em;
-  }
 }
 </style>

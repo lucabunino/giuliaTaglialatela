@@ -18,5 +18,15 @@ export default {
       name: 'hoverColor',
       type: 'color',
     },
+    {
+      name: 'displaceImages',
+      type: 'array',
+      of: [
+        { type: 'image' },
+      ],
+      options: {
+        layout: 'grid'
+      },
+    },
   ],
 };

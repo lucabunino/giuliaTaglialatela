@@ -133,6 +133,23 @@ export async function getArchive() {
 		`
 	);
 }
+export async function getDisplaceImages() {
+	return await client.fetch(
+		`
+		*[_type == "settings" && !(_id in path('drafts.**'))][0] {
+			displaceImages[] {
+				asset->{
+					_ref, _id, _type,
+					title,
+					description,
+					altText,
+					metadata {dimensions}
+				}
+			},
+		}
+		`
+	);
+}
 export async function getProject(slug) {
 	return await client.fetch(
 		`

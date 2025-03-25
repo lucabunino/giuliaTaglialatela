@@ -28,6 +28,7 @@ let innerHeight = $state();
       alt={project.image.asset.altText}
       src={urlFor(project.image).height(1920)}
       >
+      <p class="caption">{project.reference.client.title}, {project.reference.title}, {project.reference.date.split('-')[0]}</p>
       </a>
     {/each}
   </div>
@@ -35,10 +36,16 @@ let innerHeight = $state();
 
 <style>
 @media screen and (max-width: 700px) {
+  .mobile-swiper {
+    margin: 37vw var(--margin);
+  }
   .project {
     display: flex;
     flex-direction: column;
     align-items: center;
+  }
+  .caption {
+    margin-bottom: .1em;
   }
   .img {
     object-fit: unset;

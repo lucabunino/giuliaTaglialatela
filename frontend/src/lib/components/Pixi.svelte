@@ -2,27 +2,30 @@
   import { urlFor } from '$lib/utils/image.js';
   import { Application, Assets, Sprite, DisplacementFilter, WRAP_MODES } from 'pixi.js';
 
+  let res = 2
   let domLoaded = $state(false)
   let pixi = $state(false);
   let app = $state();
   let canvas = $state();
-  let { img, canvasWidth, canvasHeight } = $props();
+  let { displaceImages, projectHover, canvasWidth, canvasHeight } = $props();
+  let singlePaged = projectHover.singlePaged;
+  let previewUrl = urlFor(projectHover.preview.asset).width(720*res).url();  
+  let randomIndex = Math.floor(Math.random() * displaceImages.displaceImages.length);
+  let displaceUrl = urlFor(displaceImages.displaceImages[randomIndex].asset).width(1080).url();
   let innerWidth = $state();
   let innerHeight = $state();
-  let res = 2
-  let imgUrl = urlFor(img).width(1080).url();
   let resized = $state(false);
   
   async function renderPixi() {
     app = new Application();
-    await app.init({ background: '#fff', width: canvasWidth*res, height: Math.round(canvasWidth*res/img.asset.metadata.dimensions.aspectRatio), resolution: res, antialias:  true});
+    await app.init({ background: '#fff', width: canvasWidth*res, height: Math.round(canvasWidth*res/projectHover.preview.asset.metadata.dimensions.aspectRatio), resolution: res, antialias:  true});
   
     if (canvas) {
       canvas.appendChild(app.canvas);
     }
   
     // Load the main image as a Sprite
-    const texture = await Assets.load(imgUrl);
+    const texture = await Assets.load(previewUrl);
     let mainSprite = new Sprite(texture);
     mainSprite.anchor.set(0.5);
     if (app.stage && mainSprite) {
@@ -30,10 +33,9 @@
     }
   
     // Load displacement texture
-    const displacementTextureUrl = '/wave.jpeg';
-    let displacementSprite = new Sprite(await Assets.load(displacementTextureUrl));
+    let displacementSprite = new Sprite(await Assets.load(displaceUrl));
     displacementSprite.texture.source.addressMode = 'mirror-repeat';
-    displacementSprite.scale.set(.5*(.5 + Math.random()));
+    displacementSprite.scale.set(.9*(.5 + Math.random()));
   
     const displacementFilter = new DisplacementFilter(displacementSprite);
     displacementFilter.autoFit = true;
@@ -48,7 +50,6 @@
   
     let count = 0;
     let maxIntensity = 200 * (.5 + Math.random());
-    let duration = 120;
     let frameCount = 0;
     let randomFactor = 3*(-.5 + Math.random())
   
@@ -58,18 +59,24 @@
     function animate() {
       let currentTime = performance.now();
       let elapsedTime = (currentTime - startTime) / 1000; // Elapsed time in seconds
-
-      // Calculate the progress based on the elapsed time
-      let progress = Math.min(elapsedTime / targetDuration, 1); // Ensure progress doesn't exceed 1
-
-      // Adjust displacement based on progress
-      let displacementAmount = maxIntensity * (1 - progress) + (0.8 + Math.random() * 0.4);
-      displacementSprite.x = displacementAmount * randomFactor;
-      displacementSprite.y = displacementAmount * randomFactor;
-      displacementFilter.scale.set(displacementAmount);
-
-      // Continue the animation until it's finished
-      if (progress < 1) {
+      if (singlePaged) {
+        // Calculate the progress based on the elapsed time
+        let progress = Math.min(elapsedTime / targetDuration, 1); // Ensure progress doesn't exceed 1
+        // Adjust displacement based on progress
+        let displacementAmount = maxIntensity * (1 - progress) + (0.8 + Math.random() * 0.4);
+        displacementSprite.x = displacementAmount * randomFactor;
+        displacementSprite.y = displacementAmount * randomFactor;
+        displacementFilter.scale.set(displacementAmount); 
+        // Continue the animation until it's finished
+        if (progress < 1) {
+          requestAnimationFrame(animate);
+        }
+      } else {
+        // Adjust displacement based on progress
+        let displacementAmount = maxIntensity + (0.8 + Math.random() * 0.4);
+        displacementSprite.x -= 2 * randomFactor;
+        displacementSprite.y -= 2 * randomFactor;
+        displacementFilter.scale.set(displacementAmount);
         requestAnimationFrame(animate);
       }
     }
@@ -116,7 +123,7 @@
   <div
     id="canvas"
     bind:this={canvas}
-    style="aspect-ratio: {img.asset.metadata.dimensions.aspectRatio};"
+    style="aspect-ratio: {projectHover.preview.asset.metadata.dimensions.aspectRatio};"
   ></div>
   
   <style>

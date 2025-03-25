@@ -5,7 +5,8 @@ let { data } = $props()
 // Variables
 let index = $state(0)
 let projectHover = $derived(data.archive[index])
-let img = $derived(projectHover.preview);
+let displaceImages = data.displaceImages
+let img = $derived(projectHover.preview)
 let canvasWidth = $state()
 let canvasHeight = $state()
 
@@ -49,7 +50,7 @@ import { fade } from "svelte/transition";
       style="aspect-ratio: {img.asset.metadata.dimensions.aspectRatio}"
       in:fade={{ duration: 200 }}
       out:fade={{ duration: 200 }}>
-        <Pixi img={img} canvasWidth={canvasWidth} canvasHeight={canvasHeight}/>
+        <Pixi displaceImages={displaceImages} projectHover={projectHover} canvasWidth={canvasWidth} canvasHeight={canvasHeight}/>
       </div>
     {/key}
 </section>
@@ -113,5 +114,51 @@ import { fade } from "svelte/transition";
 }
 .target {
   visibility: hidden;
+}
+@media screen and (max-width: 900px) {
+  .row label:nth-child(1) {grid-column: 1 / span 3;}
+  .row label:nth-child(2) {grid-column: 4 / span 4;}
+  .row label:nth-child(3) {grid-column: 8 / span 1;justify-self: right;}
+  .row label:nth-child(4) {grid-column: 9 / span 4;}
+
+  .row>.client {
+    grid-column: 1 / span 3;
+  }
+  .row>.project {
+    grid-column: 4 / span 4;
+    position: relative;
+  }
+  .row>.year {
+    grid-column: 8 / span 1;
+    text-align: right;
+  }
+  .preview, .target {
+    grid-column: 9 / span 4;
+  }
+}
+@media screen and (max-width: 700px) {
+  .row {
+    grid-template-columns: repeat(8, 1fr);
+  }
+  .row label:nth-child(1) {grid-column: 1 / span 2;}
+  .row label:nth-child(2) {grid-column: 3 / span 5;}
+  .row label:nth-child(3) {grid-column: 8 / span 1;justify-self: right;}
+  .row label:nth-child(4) {display: none;}
+
+  .row>.client {
+    grid-column: 1 / span 2;
+  }
+  .row>.project {
+    grid-column: 3 / span 5;
+    position: relative;
+  }
+  .row>.year {
+    grid-column: 8 / span 1;
+    text-align: right;
+  }
+  .preview, .target {
+    grid-column: 9 / span 4;
+    top: 50vh;
+  }
 }
 </style>
