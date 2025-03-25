@@ -86,15 +86,16 @@ a:any-link {
   cursor: pointer;
   text-decoration: none;
 }
-a:hover {
-  color: var(--hoverColor);
+@media screen and (min-width: 701px) {
+  a:hover {
+    color: var(--hoverColor);
+  }
 }
 a:-webkit-any-link.underline,
 a:any-link.underline,
 .underline {
   text-decoration: underline;
 }
-
 .honeymoon-120 {
   font-family: ABCHoneymoon, Brush Script MT, 'Courier New', Courier, monospace;
   font-weight: 400;

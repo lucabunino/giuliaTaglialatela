@@ -65,17 +65,17 @@ function handleKey({key}) {if (key === 'G' && dev) {viewGrid = !viewGrid}}
         <a href="/" class="active" onclick={(e) => {menuOpen = false}}><span class="logo page-active">G</span><span class="menu-active">iulia</span> <br class="mobile-only"><span class="logo page-active">T</span><span class="menu-active">aglialatela</span></a></li>
       <div>
         <li class="menu-item">
-          <a href="/commercial" class:active={$page.url.pathname === "/commercial"} onclick={(e) => {menuOpen = false}}><span class="page-active">C</span><span class="menu-active">ommercial</span></a>
+          <a href="/commercial" class:active={$page.url.pathname === "/commercial" && innerWidth > 700} onclick={(e) => {menuOpen = false}}><span class="page-active">C</span><span class="menu-active">ommercial</span></a>
         </li>
         <li class="menu-item" style="overflow:hidden">
-          <a href="/interior" class:active={$page.url.pathname === "/interior"} onclick={(e) => {menuOpen = false}}><span class="page-active">I</span><span class="menu-active">nterior</span></a>
+          <a href="/interior" class:active={$page.url.pathname === "/interior" && innerWidth > 700} onclick={(e) => {menuOpen = false}}><span class="page-active">I</span><span class="menu-active">nterior</span></a>
         </li>
       </div>
       <li class="menu-item">
-        <a href="/archive" class:active={$page.url.pathname === "/archive"} onclick={(e) => {menuOpen = false}}><span class="page-active">A</span><span class="menu-active">rchive</span></a>
+        <a href="/archive" class:active={$page.url.pathname === "/archive" && innerWidth > 700} onclick={(e) => {menuOpen = false}}><span class="page-active">A</span><span class="menu-active">rchive</span></a>
       </li>
       <li class="menu-item menu-ig">
-        <a href="/info" class:active={$page.url.pathname === "/info"} onclick={(e) => {menuOpen = false}}><span class="page-active">I</span><span class="menu-active">nfo</span></a>
+        <a href="/info" class:active={$page.url.pathname === "/info" && innerWidth > 700} onclick={(e) => {menuOpen = false}}><span class="page-active">I</span><span class="menu-active">nfo</span></a>
         <a href={data.settings.instagramUrl} target="_blank" rel="noopener noreferrer">
           <svg version="1.1" viewBox="-0.1 -0.1 8.2 8.2" xmlns="http://www.w3.org/2000/svg">
             <g>
@@ -161,12 +161,14 @@ function handleKey({key}) {if (key === 'G' && dev) {viewGrid = !viewGrid}}
   stroke: var(--black);
   stroke-width: 0.01vw;
 }
-.menu-item.menu-ig svg:hover {
-  fill: var(--hoverColor);
-}
-.menu-item.menu-ig svg:hover .st1 {
-  stroke: var(--hoverColor);
-  stroke-width: 0.01vw;
+@media screen and (min-width: 701px) {
+  .menu-item.menu-ig svg:hover {
+    fill: var(--hoverColor);
+  }
+  .menu-item.menu-ig svg:hover .st1 {
+    stroke: var(--hoverColor);
+    stroke-width: 0.01vw;
+  }
 }
 
 
@@ -227,8 +229,10 @@ function handleKey({key}) {if (key === 'G' && dev) {viewGrid = !viewGrid}}
   transform: rotate(-20deg);
   top: 50%;
 }
-.menu-switch:hover .line {
-  background-color: var(--hoverColor);
+@media screen and (min-width: 701px) {
+  .menu-switch:hover .line {
+    background-color: var(--hoverColor);
+  }
 }
 
 @media screen and (max-width: 700px) {

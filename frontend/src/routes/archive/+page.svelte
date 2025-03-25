@@ -9,12 +9,23 @@ let displaceImages = data.displaceImages
 let img = $derived(projectHover.preview)
 let canvasWidth = $state()
 let canvasHeight = $state()
+let innerWidth = $state()
 
 // Imports
 import Pixi from '$lib/components/Pixi.svelte'
 import { urlFor } from '$lib/utils/image.js';
 import { fade } from "svelte/transition";
+
+function mobileClick(event) {
+  if (innerWidth > 700) {
+    return
+  } else {
+    event.preventDefault()
+  }
+}
 </script>
+
+<svelte:window bind:innerWidth></svelte:window>
 
 <section id="archive">
   <div class="row">
@@ -25,7 +36,7 @@ import { fade } from "svelte/transition";
   </div>
   {#each data.archive as project, i}
   {#if project.singlePaged}
-    <a class="row" href="archive/{project.slug.current}" onmouseover={() => index = i}>
+    <a class="row hoverColor" class:mobileActive={i === index} href="archive/{project.slug.current}" onmouseover={() => index = i} onclick={(e) => {mobileClick(e)}}>
       <p class="client">{project.client.title}</p>
       <div class="project">
         <span class="cta honeymoon-24">View</span>
@@ -34,7 +45,7 @@ import { fade } from "svelte/transition";
       <p class="year">{project.date.split('-')[0]}</p>
     </a>
   {:else}
-  <div class="row hoverColor" onmouseover={() => index = i}>
+  <div class="row hoverColor" class:mobileActive={i === index} onmouseover={() => index = i}>
     <p class="client">{project.client.title}</p>
     <div class="project">
       <p>{project.title}</p>
@@ -56,8 +67,10 @@ import { fade } from "svelte/transition";
 </section>
 
 <style>
-.hoverColor:hover {
-  color: var(--hoverColor);
+@media screen and (min-width: 701px) {
+  .hoverColor:hover {
+    color: var(--hoverColor);
+  }
 }
 #archive {
   padding: 13em var(--margin);
@@ -85,6 +98,11 @@ import { fade } from "svelte/transition";
 .row label:nth-child(3) {grid-column: 9 / span 1;justify-self: right;}
 .row label:nth-child(4) {grid-column: 10 / span 3;}
 
+.row>*, .row>*>* {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .row>.client {
   grid-column: 4 / span 2;
 }
@@ -137,6 +155,12 @@ import { fade } from "svelte/transition";
   }
 }
 @media screen and (max-width: 700px) {
+  .mobileActive {
+    color: var(--hoverColor);
+  }
+  #archive {
+    padding: 37vw var(--margin) 15vw;
+  }
   .row {
     grid-template-columns: repeat(8, 1fr);
   }
@@ -156,9 +180,22 @@ import { fade } from "svelte/transition";
     grid-column: 8 / span 1;
     text-align: right;
   }
+  .cta {
+    display: none;
+  }
   .preview, .target {
-    grid-column: 9 / span 4;
-    top: 50vh;
+    grid-column: 6 / span 4;
+    bottom: var(--margin);
+  }
+}
+@media screen and (max-width: 320px) {
+  .row label:nth-child(2) {grid-column: 3 / span 4;}
+  .row label:nth-child(3) {grid-column: 7 / span 2;}
+  .row>.project {
+    grid-column: 3 / span 4;
+  }
+  .row>.year {
+    grid-column: 7 / span 2;
   }
 }
 </style>
