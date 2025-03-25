@@ -80,7 +80,7 @@
         requestAnimationFrame(animate);
       }
     }
-    // requestAnimationFrame(animate);
+    requestAnimationFrame(animate);
 
     function resizeSprite() {
       if (app.stage && mainSprite) {
