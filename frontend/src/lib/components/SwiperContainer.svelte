@@ -15,7 +15,7 @@ let aboveElements = $state([]);
 $inspect(aboveElements)
 
 function handleScroll() {
-  let threshold = innerWidth * .37 - 1;
+  let threshold = innerHeight * .05;
   projectsElements.forEach((el, i) => {
     if (!el) return;
     let rect = el.getBoundingClientRect();
@@ -72,7 +72,7 @@ function handleScroll() {
   .img {
     object-fit: unset;
     height: auto;
-    transition: var(--transition);
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
   .img.S {
     max-height: unset;
