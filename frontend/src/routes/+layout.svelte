@@ -253,7 +253,8 @@ function handleKey({key}) {if (key === 'G' && dev) {viewGrid = !viewGrid}}
 }
 .line {
   width: 100%;
-  height: .1vw;
+  height: clamp(1px, .1vw, 2px);
+  height: 1px;
   background-color: var(--black);
   position: absolute;
   transition: var(--transition);
@@ -305,7 +306,7 @@ function handleKey({key}) {if (key === 'G' && dev) {viewGrid = !viewGrid}}
     height: calc(5vw + var(--margin)*2);
   }
   .line {
-    height: .2vw;
+    /* height: .2vw; */
   }
 }
 
