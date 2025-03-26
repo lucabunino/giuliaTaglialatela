@@ -9,6 +9,8 @@ import { dev } from '$app/environment';
 import { page } from '$app/stores';
 import { urlFor } from '$lib/utils/image';
 import { fade } from "svelte/transition";
+import { cubicInOut } from 'svelte/easing';
+import { pageIn, pageOut } from '$lib/utils/transition'
 import { goto, afterNavigate, onNavigate } from "$app/navigation";
 import { onMount } from "svelte";
 
@@ -19,6 +21,7 @@ $inspect(backPathname)
 let domLoaded = $state(false)
 let innerWidth = $state(0)
 let innerHeight = $state(0)
+let scrollY = $state(0)
 let menuOpen = $state(false)
 let canGoBack = $state()
 $inspect(canGoBack)
@@ -47,7 +50,7 @@ const gridColumnsMobile = 4
 function handleKey({key}) {if (key === 'G' && dev) {viewGrid = !viewGrid}}
 </script>
 
-<svelte:window bind:innerWidth bind:innerHeight onkeyup={handleKey}></svelte:window>
+<svelte:window bind:scrollY bind:innerWidth bind:innerHeight onkeyup={handleKey}></svelte:window>
 
 {#if viewGrid}
 <div id="layout"
@@ -134,8 +137,8 @@ function handleKey({key}) {if (key === 'G' && dev) {viewGrid = !viewGrid}}
 {#if domLoaded}
   {#key data.pathname}
     <main
-    in:fade|global={{ duration: 400, delay: 400 }}
-    out:fade|global={{ duration: 400, delay: 0}}>
+    in:pageIn|global={{ duration: 200, delay: 200 }}
+    out:pageOut|global={{ duration: 200, delay: 0, marginTop: scrollY}}>
       {@render children()}
     </main>
   {/key}
@@ -256,7 +259,6 @@ function handleKey({key}) {if (key === 'G' && dev) {viewGrid = !viewGrid}}
   transition: var(--transition);
   transition-property: top, transform, transform-origin;
   transform-origin: center;
-  transition-duration: 1s;
 }
 .line:nth-child(1) {top: 0;}
 .line:nth-child(2) {top: 50%;}
