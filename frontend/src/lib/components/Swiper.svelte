@@ -1,6 +1,6 @@
 <script>
 // Data
-let { projects } = $props()
+let { index, projects } = $props()
 
 // Imports
 import { register } from 'swiper/element/bundle';register();
@@ -14,6 +14,10 @@ let innerHeight = $state();
 let mouse = $state([])
 let cta = $state()
 
+import { getSlide } from "$lib/stores/slide.svelte";
+let slider = getSlide()
+$inspect(slider)
+
 // Functions
 function setCta(text) {
   cta = text
@@ -21,6 +25,7 @@ function setCta(text) {
 function onRealIndexChange(e) {
   const [swiper] = e.detail;
   currentIndex = swiper.realIndex
+  slider.setSlide(swiper.realIndex)
 }
 function handleMousemove(event) {
   mouse.x = event.clientX;
@@ -46,39 +51,42 @@ function addClicked(selector) {
 
 // Lifecycle
 $effect(() => {
-const swiperEl = document.querySelector('swiper-container');
-const swiperParams = {
-  slidesPerView: 1.5,
-  centeredSlides: true,
-  loop: true,
-  mousewheel: {
-    forceToAxis: false,
-    sensitivity: .3,
-    thresholdDelta: 10,
-  },
-  navigation: {
-    nextEl: '.swiper-button-next',
-    prevEl: '.swiper-button-prev',
-  },
-  speed: 400,
-  keyboard: true,
-  hashNavigation: true,
-  breakpoints: {
-    900: {
-      slidesPerView: 2,
-    },
-    
-  },
-};
-Object.assign(swiperEl, swiperParams);
-swiperEl.initialize();
+  setTimeout(() => {
+    const swiperEl = document.querySelector('#swiper-' + index);
+    const swiperParams = {
+      slidesPerView: 1.5,
+      centeredSlides: true,
+      loop: true,
+      mousewheel: {
+        forceToAxis: false,
+        sensitivity: .3,
+        thresholdDelta: 10,
+      },
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+      speed: 400,
+      keyboard: true,
+      hashNavigation: true,
+      breakpoints: {
+        900: {
+          slidesPerView: 2,
+        },
+      },
+    };
+    Object.assign(swiperEl, swiperParams);
+    swiperEl.initialize();
+  }, 100);
 })
 </script>
   
 <svelte:window bind:innerWidth bind:innerHeight onmousemove={handleMousemove}></svelte:window>
   
 <swiper-container
+id="swiper-{index}"
 init="false"
+initial-slide = {slider.slide}
 onswiperrealindexchange={onRealIndexChange}
 >
   {#each projects as project, i}
@@ -92,10 +100,10 @@ onswiperrealindexchange={onRealIndexChange}
       class="img {project.size} transition-{i%4+1}"
       class:hoverNext={mouse.x > innerWidth/4*3}
       class:hoverPrev={mouse.x < innerWidth/4*1}
-      width={project.image.asset.metadata.dimensions.width}
-      height={project.image.asset.metadata.dimensions.height}
-      alt={project.image.asset.altText}
-      src={urlFor(project.image).height(1920)}
+      width={project.reference.preview.asset.metadata.dimensions.width}
+      height={project.reference.preview.asset.metadata.dimensions.height}
+      alt={project.reference.preview.asset.altText}
+      src={urlFor(project.reference.preview).height(1920)}
       >
       </a>
     </swiper-slide>

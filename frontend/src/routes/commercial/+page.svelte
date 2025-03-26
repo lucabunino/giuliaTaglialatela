@@ -1,6 +1,6 @@
 <script>
 // Data
-let { data } = $props()
+let { data, menuOpen } = $props()
 
 // Imports
 import SwiperContainer from '$lib/components/SwiperContainer.svelte';
@@ -12,5 +12,5 @@ $effect(() => {
 </script>
 
 <section id="commercial">
-  <SwiperContainer projects={data.commercial}/>
+  <SwiperContainer index={1} menuOpen={menuOpen} projects={data.commercial}/>
 </section>

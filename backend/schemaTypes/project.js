@@ -69,7 +69,7 @@ export default {
       const formattedYear = date ? new Date(date).getFullYear() : 'No year';
       return {
         title,
-        subtitle: `${formattedYear} – ${client || 'No client'}`,
+        subtitle: `${formattedYear} × ${client || 'No client'}`,
         media: preview,
       };
     }

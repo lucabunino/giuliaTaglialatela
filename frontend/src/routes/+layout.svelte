@@ -9,16 +9,32 @@ import { dev } from '$app/environment';
 import { page } from '$app/stores';
 import { urlFor } from '$lib/utils/image';
 import { fade } from "svelte/transition";
+import { goto, afterNavigate, onNavigate } from "$app/navigation";
+import { onMount } from "svelte";
+
+let backPathname = $state("")
+$inspect(backPathname)
 
 // Variables
 let domLoaded = $state(false)
 let innerWidth = $state(0)
 let innerHeight = $state(0)
 let menuOpen = $state(false)
+let canGoBack = $state()
+$inspect(canGoBack)
 
 // Functions
-
-
+function handlePageClick(event) {
+  if (menuOpen) {
+    menuOpen = false
+  } else {
+    event.preventDefault()
+    menuOpen = true
+  }
+}
+onNavigate(() => {
+  canGoBack = true;
+})
 // Lifecycle
 $effect(() => {
   domLoaded = true
@@ -66,19 +82,20 @@ function handleKey({key}) {if (key === 'G' && dev) {viewGrid = !viewGrid}}
         <a href="/" class="active" onclick={(e) => {menuOpen = false}}><span class="logo page-active">G</span><span class="menu-active">iulia</span> <br class="mobile-only"><span class="logo page-active">T</span><span class="menu-active">aglialatela</span></a></li>
       <div>
         <li class="menu-item">
-          <a href="/commercial" class:active={$page.url.pathname === "/commercial" && innerWidth > 700} onclick={(e) => {menuOpen = false}}><span class="page-active">C</span><span class="menu-active">ommercial</span></a>
+          <a href="/commercial" class:active={$page.url.pathname === "/commercial" && innerWidth > 700} onclick={(e) => {handlePageClick(e)}}><span class="page-active">C</span><span class="menu-active">ommercial</span></a>
         </li>
         <li class="menu-item" style="overflow:hidden">
-          <a href="/interior" class:active={$page.url.pathname === "/interior" && innerWidth > 700} onclick={(e) => {menuOpen = false}}><span class="page-active">I</span><span class="menu-active">nterior</span></a>
+          <a href="/interior" class:active={$page.url.pathname === "/interior" && innerWidth > 700} onclick={(e) => {handlePageClick(e)}}><span class="page-active">I</span><span class="menu-active">nterior</span></a>
         </li>
       </div>
       <li class="menu-item">
-        <a href="/archive" class:active={$page.url.pathname === "/archive" && innerWidth > 700} onclick={(e) => {menuOpen = false}}><span class="page-active">A</span><span class="menu-active">rchive</span></a>
+        <a href="/archive" class:active={$page.url.pathname === "/archive" && innerWidth > 700} onclick={(e) => {handlePageClick(e)}}><span class="page-active">A</span><span class="menu-active">rchive</span></a>
       </li>
       <li class="menu-item menu-ig">
-        <a href="/info" class:active={$page.url.pathname === "/info" && innerWidth > 700} onclick={(e) => {menuOpen = false}}><span class="page-active">I</span><span class="menu-active">nfo</span></a>
+        <a href="/info" class:active={$page.url.pathname === "/info" && innerWidth > 700} onclick={(e) => {handlePageClick(e)}}><div><span class="page-active">I</span><span class="menu-active">nfo</span></div></a>
         <a href={data.settings.instagramUrl} target="_blank" rel="noopener noreferrer">
-          <svg version="1.1" viewBox="-0.1 -0.1 8.2 8.2" xmlns="http://www.w3.org/2000/svg">
+          Ig
+          <!-- <svg version="1.1" viewBox="-0.1 -0.1 8.2 8.2" xmlns="http://www.w3.org/2000/svg">
             <g>
               <rect class="st0" width="8.1" height="8.1" rx="2.1" ry="2.1"/>
               <rect class="st1" x="0" y="0" width="8" height="8" rx="2" ry="2"/>
@@ -88,12 +105,23 @@ function handleKey({key}) {if (key === 'G' && dev) {viewGrid = !viewGrid}}
               <ellipse class="st1" cx="4.1" cy="4.2" rx="1.9" ry="1.9"/>
             </g>
             <circle cx="6.5" cy="1.8" r=".3"/>
-          </svg>          
+          </svg>           -->
         </a>
       </li>
     </ul>
-    <button class="menu-switch" onclick={(e) => {menuOpen = !menuOpen}} onkeydown={(e) => {if (e.key === 'Enter' || e.key === ' ') {menuOpen = !menuOpen}}} class:crossed={menuOpen}>
+    <button class="menu-switch" class:arrow={$page.url.pathname.includes("/archive/")} onclick={(e) => {
+      if ($page.url.pathname.includes("/archive/")) {
+        if (canGoBack) {
+          history.back()
+        } else {
+          goto("/archive")
+        }
+      } else {
+        menuOpen = !menuOpen
+      }
+      }} onkeydown={(e) => {if (e.key === 'Enter' || e.key === ' ') {menuOpen = !menuOpen}}} class:crossed={menuOpen}>
       <div style="position: relative; height:100%;">
+        <div class="line"></div>
         <div class="line"></div>
         <div class="line"></div>
         <div class="line"></div>
@@ -131,7 +159,7 @@ function handleKey({key}) {if (key === 'G' && dev) {viewGrid = !viewGrid}}
   top: 0;
   left: 0;
   width: 100%;
-  height: -webkit-fill-available;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -144,7 +172,7 @@ function handleKey({key}) {if (key === 'G' && dev) {viewGrid = !viewGrid}}
   pointer-events: all;
 }
 .menu-item {
-  margin: 0 -.15em;
+  margin: 0 var(--margin) 0 -.15em;
 }
 .menu:not(.open) .menu-item a {
   opacity: 0;
@@ -198,7 +226,7 @@ function handleKey({key}) {if (key === 'G' && dev) {viewGrid = !viewGrid}}
     padding: var(--margin) 0 calc(var(--margin)*2);
   }
   .menu-item {
-    margin: 0 -.25em;
+    margin: 0 var(--margin) 0 -.25em;
   }
   .menu-item.menu-ig svg {
     margin-right: calc(var(--margin) + .25em);
@@ -226,12 +254,14 @@ function handleKey({key}) {if (key === 'G' && dev) {viewGrid = !viewGrid}}
   background-color: var(--black);
   position: absolute;
   transition: var(--transition);
-  transition-property: top, transform;
+  transition-property: top, transform, transform-origin;
   transform-origin: center;
+  transition-duration: 1s;
 }
 .line:nth-child(1) {top: 0;}
 .line:nth-child(2) {top: 50%;}
 .line:nth-child(3) {top: 100%;}
+.line:nth-child(4) {top: 100%; transform-origin:right; transform: scaleY(0) rotate(90deg) scaleX(.5);}
 .menu-switch.crossed .line:nth-child(1) {
   transform: rotate(20deg);
   top: 50%;
@@ -242,6 +272,23 @@ function handleKey({key}) {if (key === 'G' && dev) {viewGrid = !viewGrid}}
 .menu-switch.crossed .line:nth-child(3) {
   transform: rotate(-20deg);
   top: 50%;
+}
+
+.menu-switch.arrow .line:nth-child(1) {
+  transform-origin: left;
+  transform: rotate(-22deg) scaleX(.5);
+  top: 100%;
+}
+.menu-switch.arrow .line:nth-child(2) {
+  top: 100%;
+}
+.menu-switch.arrow .line:nth-child(3) {
+  transform-origin: left;
+  transform: rotate(22deg) scaleX(.5);
+}
+
+.menu-switch.arrow .line:nth-child(4) {
+  transform: scaleY(.5) scaleX(.5) rotate(90deg);
 }
 @media screen and (min-width: 701px) {
   .menu-switch:hover .line {
@@ -262,8 +309,8 @@ function handleKey({key}) {if (key === 'G' && dev) {viewGrid = !viewGrid}}
 
 /* Main */
 main {
-  min-height: calc(100vh - 3rem);
-  min-height: calc(100svh - 3rem);
+  min-height: calc(100vh - 3.431rem);
+  min-height: calc(100svh - 3.431rem);
 }
 
 /* Footer */

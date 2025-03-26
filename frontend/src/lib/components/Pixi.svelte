@@ -55,7 +55,7 @@
     let randomFactor = 3*(-.5 + Math.random())
   
     let startTime = performance.now();
-    let targetDuration = 1; // Target duration in seconds
+    let targetDuration = .5; // Target duration in seconds
 
     function animate() {
       let currentTime = performance.now();

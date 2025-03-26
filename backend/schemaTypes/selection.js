@@ -26,11 +26,6 @@ export default {
               validation: (Rule) => Rule.required(),
             },
             {
-              name: 'image',
-              type: 'image',
-              validation: (Rule) => Rule.required(),
-            },
-            {
               name: 'size',
               type: 'string',
               options: {
@@ -49,9 +44,19 @@ export default {
           preview: {
             select: {
               title: 'reference.title',
-              subtitle: 'reference.date',
-              media: 'image',
+              date: 'reference.date',
+              size: 'size',
+              client: 'reference.client.title',
+              preview: 'reference.preview'
             },
+            prepare({ title, date, client, preview, size }) {
+              const formattedYear = date ? new Date(date).getFullYear() : 'No year';
+              return {
+                title: `[${size}] ${title}`,
+                subtitle: `${formattedYear} × ${client || 'No client'}`,
+                media: preview,
+              };
+            }
           }
         }
       ],

@@ -32,7 +32,7 @@ $effect(() => {
 
 <style>
 #info {
-  padding: 11em var(--margin);
+  padding: 11em var(--margin) 2em;
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   column-gap: var(--gutter);

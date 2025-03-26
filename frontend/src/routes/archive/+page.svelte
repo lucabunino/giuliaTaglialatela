@@ -40,7 +40,7 @@ $effect(() => {
     <label>Preview</label>
   </div>
   {#each data.archive as project, i}
-  {#if project.singlePaged}
+  {#if project.singlePaged && innerWidth > 700}
     <a class="row hoverColor" class:mobileActive={i === index} href="archive/{project.slug.current}" onmouseover={() => index = i} onclick={(e) => {mobileClick(e)}}>
       <p class="client">{project.client.title}</p>
       <div class="project">
@@ -53,6 +53,9 @@ $effect(() => {
   <button class="row hoverColor" class:mobileActive={i === index} onmouseover={() => index = i}>
     <p class="client">{project.client.title}</p>
     <div class="project">
+      {#if project.singlePaged}
+        <a class="mobile-only cta honeymoon-24" class:mobileActive={i === index} href="archive/{projectHover.slug.current}">View</a>
+      {/if}
       <p>{project.title}</p>
     </div>
     <p class="year">{project.date.split('-')[0]}</p>
@@ -68,9 +71,9 @@ $effect(() => {
       in:fade|global={{ duration: 50, delay: 50 }}
       out:fade|global={{ duration: 50, delay: 50}}>
         <Pixi displaceImages={displaceImages} projectHover={projectHover} canvasWidth={canvasWidth} canvasHeight={canvasHeight}/>
-        {#if projectHover.singlePaged}
+        <!-- {#if projectHover.singlePaged}
           <a class="mobile-only view-project" href="archive/{projectHover.slug.current}">View project</a>
-        {/if}
+        {/if} -->
       </div>
     {/key}
   {/if}
@@ -100,6 +103,9 @@ $effect(() => {
   margin-bottom: 2em;
   height: 1.431rem;
 }
+button:hover {
+  cursor: default;
+}
 .row label {
   position: fixed;
 }
@@ -108,7 +114,7 @@ $effect(() => {
 .row label:nth-child(3) {margin-left: calc((100% - var(--margin)*2 - var(--gutter)*11)/12*9 + var(--gutter)*8); transform: translateX(-100%);}
 .row label:nth-child(4) {margin-left: calc((100% - var(--margin)*2 - var(--gutter)*11)/12*9 + var(--gutter)*9);}
 
-.row>*, .row>*>* {
+.row>*:not(.project), .row>*>* {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -193,15 +199,15 @@ $effect(() => {
   .row:nth-child(1) {
     margin-top: calc(var(--margin)*2);
   }
-  .row label:nth-child(2) {margin-left: calc((100% - var(--margin)*2 - var(--gutter)*7)/8*2 + var(--gutter)*2);}
+  .row label:nth-child(2) {margin-left: calc((100% - var(--margin)*2 - var(--gutter)*7)/8*3 + var(--gutter)*3);}
   .row label:nth-child(3) {margin-left: calc((100% - var(--margin)*2 - var(--gutter)*7)/8*8 + var(--gutter)*7);}
   .row label:nth-child(4) {display: none;}
 
   .row>.client {
-    grid-column: 1 / span 2;
+    grid-column: 1 / span 3;
   }
   .row>.project {
-    grid-column: 3 / span 5;
+    grid-column: 4 / span 4;
     position: relative;
   }
   .row>.year {
@@ -209,7 +215,7 @@ $effect(() => {
     text-align: right;
   }
   .cta {
-    display: none;
+    /* display: none; */
   }
   .preview, .target {
     width: calc((100% - var(--margin)*2 - var(--gutter)*7)/8*4 + var(--gutter)*3);

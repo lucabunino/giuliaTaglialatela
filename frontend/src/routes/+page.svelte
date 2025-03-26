@@ -1,7 +1,6 @@
 <script>
 // Data
 let { data, menuOpen } = $props()
-$inspect(menuOpen)
 
 // Imports
 import SwiperContainer from '$lib/components/SwiperContainer.svelte';
@@ -13,5 +12,5 @@ $effect(() => {
 </script>
 
 <section id="homepage">
-  <SwiperContainer menuOpen={menuOpen} projects={data.homepage}/>
+  <SwiperContainer index={0} menuOpen={menuOpen} projects={data.homepage}/>
 </section>

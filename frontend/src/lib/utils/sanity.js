@@ -37,15 +37,6 @@ export async function getHomepage() {
 		`
 		*[_type == "selection" && !(_id in path('drafts.**')) && _id == "homepage"][0].selected[] {
 			...,
-			image {
-				asset->{
-					_ref, _id, _type,
-					title,
-					description,
-					altText,
-					metadata {dimensions}
-				}
-			},
 			reference->{
 				_type,
 				title,
@@ -53,6 +44,15 @@ export async function getHomepage() {
 				date,
 				client->{ title },
 				photographer->{ title },
+				preview {
+					asset->{
+						_ref, _id, _type,
+						title,
+						description,
+						altText,
+						metadata {dimensions}
+					}
+				},
 			},
 		}
 		`
@@ -63,15 +63,6 @@ export async function getCommercial() {
 		`
 		*[_type == "selection" && !(_id in path('drafts.**')) && _id == "commercial"][0].selected[] {
 			...,
-			image {
-				asset->{
-					_ref, _id, _type,
-					title,
-					description,
-					altText,
-					metadata {dimensions}
-				}
-			},
 			reference->{
 				_type,
 				title,
@@ -79,6 +70,15 @@ export async function getCommercial() {
 				date,
 				client->{ title },
 				photographer->{ title },
+				preview {
+					asset->{
+						_ref, _id, _type,
+						title,
+						description,
+						altText,
+						metadata {dimensions}
+					}
+				},
 			},
 		}
 		`
@@ -89,15 +89,6 @@ export async function getInterior() {
 		`
 		*[_type == "selection" && !(_id in path('drafts.**')) && _id == "interior"][0].selected[] {
 			...,
-			image {
-				asset->{
-					_ref, _id, _type,
-					title,
-					description,
-					altText,
-					metadata {dimensions}
-				}
-			},
 			reference->{
 				_type,
 				title,
@@ -105,6 +96,15 @@ export async function getInterior() {
 				date,
 				client->{ title },
 				photographer->{ title },
+				preview {
+					asset->{
+						_ref, _id, _type,
+						title,
+						description,
+						altText,
+						metadata {dimensions}
+					}
+				},
 			},
 		}
 		`

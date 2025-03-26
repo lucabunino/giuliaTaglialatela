@@ -99,7 +99,7 @@ a:any-link.underline,
 .honeymoon-120 {
   font-family: ABCHoneymoon, Brush Script MT, 'Courier New', Courier, monospace;
   font-weight: 400;
-  font-size: 10vw;
+  font-size: clamp(0px, 10vw, 140px);
   letter-spacing: 0;
   line-height: .8;
 }
@@ -135,5 +135,10 @@ a:any-link.underline,
   }
   .desktop-only {
     display: none !important;
+  }
+}
+@media screen and (max-width: 360px) {
+  .honeymoon-120 {
+    font-size: 18.5vw;
   }
 }
