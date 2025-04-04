@@ -98,6 +98,7 @@ onswiperrealindexchange={onRealIndexChange}
       >
       <img
       class="img {project.size} transition-{i%4+1}"
+      class:horizontal={project.reference.preview.asset.metadata.dimensions.aspectRatio > 1}
       class:hoverNext={mouse.x > innerWidth/4*3}
       class:hoverPrev={mouse.x < innerWidth/4*1}
       width={project.reference.preview.asset.metadata.dimensions.width}
@@ -156,6 +157,9 @@ swiper-slide a {
 }
 .img.L {
   height: 80vh;
+}
+.img.horizontal {
+  height: auto;
 }
 :global(.swiper-slide-active:hover .img.transition-1)   {transform: rotate3D(1, -1, 0, 45deg) scale(1.1);}
 :global(.swiper-slide-next .img.hoverNext.transition-1) {transform: rotate3D(-1, 1, 0, 20deg) scale(1.05) translateX(-5%);}
