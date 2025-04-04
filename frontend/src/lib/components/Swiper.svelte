@@ -152,7 +152,7 @@ swiper-slide a {
   height: 56vh;
 }
 .img.M {
-  height: 64vh;
+  height: 68vh;
 }
 .img.L {
   height: 80vh;
