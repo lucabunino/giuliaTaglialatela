@@ -113,7 +113,7 @@ export async function getInterior() {
 export async function getArchive() {
 	return await client.fetch(
 		`
-		*[_type == "project" && !(_id in path('drafts.**'))] {
+		*[_type == "project" && !(_id in path('drafts.**'))]|order(orderRank) {
 			preview {
 				asset->{
 					_ref, _id, _type,

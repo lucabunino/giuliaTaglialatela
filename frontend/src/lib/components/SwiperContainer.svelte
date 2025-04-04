@@ -58,7 +58,7 @@ function handleScroll() {
 <style>
 @media screen and (max-width: 700px) {
   .mobile-swiper {
-    margin: 37vw var(--margin);
+    margin: 27vw var(--margin);
     overflow: hidden;
   }
   .project {

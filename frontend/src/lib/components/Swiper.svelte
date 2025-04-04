@@ -111,7 +111,7 @@ onswiperrealindexchange={onRealIndexChange}
 </swiper-container>
 <button class="swiper-button swiper-button-prev" onclick={() => addClicked('.swiper-slide-active>a>img')} onmouseover={() => setCta("Prev")} onmouseleave={() => setCta("")}></button>
 <button class="swiper-button swiper-button-next" onclick={() => addClicked('.swiper-slide-active>a>img')} onmouseover={() => setCta("Next")} onmouseleave={() => setCta("")}></button>
-<p id="cta" class="honeymoon-120" style={cta === "" ? `-webkit-transform: translateX(${(mouse.x / innerWidth)*-100}%);-ms-transform: translateX(${(mouse.x / innerWidth)*-100}%);transform: translateX(${(mouse.x / innerWidth)*-100}%);left: ${mouse.x}px;top: ${mouse.y}px;` : `-webkit-transform: translateX(${(mouse.x / innerWidth)*-100}%);-ms-transform: translateX(${(mouse.x / innerWidth)*-100}%);transform: translateX(${(mouse.x / innerWidth)*-100}%);left: ${mouse.x}px;top: ${mouse.y}px;`}>{cta}</p>
+<p translate="no" id="cta" class="honeymoon-120" style={cta === "" ? `-webkit-transform: translateX(${(mouse.x / innerWidth)*-100}%);-ms-transform: translateX(${(mouse.x / innerWidth)*-100}%);transform: translateX(${(mouse.x / innerWidth)*-100}%);left: ${mouse.x}px;top: ${mouse.y}px;` : `-webkit-transform: translateX(${(mouse.x / innerWidth)*-100}%);-ms-transform: translateX(${(mouse.x / innerWidth)*-100}%);transform: translateX(${(mouse.x / innerWidth)*-100}%);left: ${mouse.x}px;top: ${mouse.y}px;`}>{cta}</p>
 <p class="project-info"><span>{currentProject.reference.title}</span>{#if currentProject.reference.client}<span>, {currentProject.reference.client.title}</span>{/if}<span>, {currentProject.reference.date.split('-')[0]}</span></p>
 
 <style>
@@ -140,21 +140,22 @@ swiper-slide a {
   right: 0;
 }
 .img {
-  object-fit: contain;
+  /* object-fit: contain; */
   transition: var(--transition);
   transform-origin: center;
   transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   transform: rotate3D(0, 0, 0, 0deg) scale(1);
   transition-delay: 0;
+  width: auto;
 }
 .img.S {
-  max-height: 37vh;
+  height: 48vh;
 }
 .img.M {
-  max-height: 60vh;
+  height: 64vh;
 }
 .img.L {
-  max-height: 80vh;
+  height: 80vh;
 }
 :global(.swiper-slide-active:hover .img.transition-1)   {transform: rotate3D(1, -1, 0, 45deg) scale(1.1);}
 :global(.swiper-slide-next .img.hoverNext.transition-1) {transform: rotate3D(-1, 1, 0, 20deg) scale(1.05) translateX(-5%);}

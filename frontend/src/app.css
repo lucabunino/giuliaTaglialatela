@@ -34,7 +34,7 @@ html {
   font-weight: 600;
   font-style: normal;
   -webkit-font-smoothing: antialiased;
-  font-size: clamp(12px, 1.015625vw, 15px);
+  font-size: clamp(12px, 1.015625vw, 12px);
   font-weight: 600;
   line-height: 1.431;
   letter-spacing: 0;

@@ -32,7 +32,7 @@ $effect(() => {
 
 <svelte:window bind:innerWidth></svelte:window>
 
-<section id="archive">
+<section id="archive" translate="no">
   <div class="row">
     <label>Client</label>
     <label>Project</label>
@@ -42,7 +42,7 @@ $effect(() => {
   {#each data.archive as project, i}
   {#if project.singlePaged && innerWidth > 700}
     <a class="row hoverColor" class:mobileActive={i === index} href="archive/{project.slug.current}" onmouseover={() => index = i} onclick={(e) => {mobileClick(e)}}>
-      <p class="client">{project.client.title}</p>
+      <p translate="no" class="client">{project.client.title}</p>
       <div class="project">
         <span class="cta honeymoon-24">View</span>
         <p>{project.title}</p>

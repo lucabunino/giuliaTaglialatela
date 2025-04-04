@@ -78,24 +78,24 @@ function handleKey({key}) {if (key === 'G' && dev) {viewGrid = !viewGrid}}
 
 <div style="--hoverColor:{data.settings.hoverColor.hex}">
 {#if domLoaded}
-<header class="honeymoon-120">
+<header class="honeymoon-120" translate="no">
   <nav>
     <ul class="menu" class:open={menuOpen}>
       <li class="menu-item">
         <a href="/" class="active" onclick={(e) => {menuOpen = false}}><span class="logo page-active">G</span><span class="menu-active">iulia</span> <br class="mobile-only"><span class="logo page-active">T</span><span class="menu-active">aglialatela</span></a></li>
       <div>
         <li class="menu-item">
-          <a href="/commercial" class:active={$page.url.pathname === "/commercial" && innerWidth > 700} onclick={(e) => {handlePageClick(e)}}><span class="page-active">C</span><span class="menu-active">ommercial</span></a>
+          <a href="/commercial" class:active={$page.url.pathname === "/commercial"} onclick={(e) => {handlePageClick(e)}}><span class="page-active">C</span><span class="menu-active">ommercial</span></a>
         </li>
         <li class="menu-item" style="overflow:hidden">
-          <a href="/interior" class:active={$page.url.pathname === "/interior" && innerWidth > 700} onclick={(e) => {handlePageClick(e)}}><span class="page-active">I</span><span class="menu-active">nterior</span></a>
+          <a href="/interior" class:active={$page.url.pathname === "/interior"} onclick={(e) => {handlePageClick(e)}}><span class="page-active">I</span><span class="menu-active">nterior</span></a>
         </li>
       </div>
       <li class="menu-item">
-        <a href="/archive" class:active={$page.url.pathname === "/archive" && innerWidth > 700} onclick={(e) => {handlePageClick(e)}}><span class="page-active">A</span><span class="menu-active">rchive</span></a>
+        <a href="/archive" class:active={$page.url.pathname === "/archive"} onclick={(e) => {handlePageClick(e)}}><span class="page-active">A</span><span class="menu-active">rchive</span></a>
       </li>
       <li class="menu-item menu-ig">
-        <a href="/info" class:active={$page.url.pathname === "/info" && innerWidth > 700} onclick={(e) => {handlePageClick(e)}}><div><span class="page-active">I</span><span class="menu-active">nfo</span></div></a>
+        <a href="/info" class:active={$page.url.pathname === "/info"} onclick={(e) => {handlePageClick(e)}}><div><span class="page-active">I</span><span class="menu-active">nfo</span></div></a>
         <a href={data.settings.instagramUrl} target="_blank" rel="noopener noreferrer">
           Ig
           <!-- <svg version="1.1" viewBox="-0.1 -0.1 8.2 8.2" xmlns="http://www.w3.org/2000/svg">
@@ -149,7 +149,7 @@ function handleKey({key}) {if (key === 'G' && dev) {viewGrid = !viewGrid}}
     <footer
     in:fade|global={{ duration: 200, delay: 200 }}
     out:fade|global={{ duration: 200, delay: 0}}>
-      <p>© Giulia Taglialela, 2025</p>
+      <p>© {data.seo[0].SEOTitle}, {new Date().getFullYear()}</p>
     </footer>
   {/key}
 {/if}
@@ -291,7 +291,7 @@ function handleKey({key}) {if (key === 'G' && dev) {viewGrid = !viewGrid}}
 }
 
 .menu-switch.arrow .line:nth-child(4) {
-  transform: scaleY(.5) scaleX(.5) rotate(90deg);
+  transform: scaleY(.5) scaleX(1) rotate(90deg);
 }
 @media screen and (min-width: 701px) {
   .menu-switch:hover .line {
@@ -304,9 +304,6 @@ function handleKey({key}) {if (key === 'G' && dev) {viewGrid = !viewGrid}}
     top: calc(.55em - var(--margin));
     width: calc(20vw + var(--margin)*2);
     height: calc(5vw + var(--margin)*2);
-  }
-  .line {
-    /* height: .2vw; */
   }
 }
 
