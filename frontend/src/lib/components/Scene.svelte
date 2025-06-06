@@ -25,9 +25,6 @@ let canvasWidth = $derived(5.2);
   <!-- Sprite -->
   {#await useTexture(imgUrl) then texture}
     <T.Mesh>
-      <!-- <T.PlaneGeometry args={[canvasWidth, canvasWidth/img.asset.metadata.dimensions.aspectRatio]} /> -->
-      <!-- <T.PlaneGeometry args={[canvasWidth, canvasWidth/1]} /> -->
-      <!-- <T.MeshBasicMaterial map={texture} /> -->
       <T.Sprite material={{ map: texture }} args={[canvasWidth, canvasWidth/img.asset.metadata.dimensions.aspectRatio]} />
     </T.Mesh>
   {/await}

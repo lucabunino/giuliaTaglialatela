@@ -30,6 +30,10 @@ $effect(() => {
 })
 </script>
 
+<svelte:head>
+  {#if data.seo[0].SEOTitle}<title>{data.seo[0].SEOTitle} | Archive</title>{/if}
+</svelte:head>
+
 <svelte:window bind:innerWidth></svelte:window>
 
 <section id="archive" translate="no">
@@ -87,14 +91,22 @@ $effect(() => {
 }
 #archive {
   padding: 13em var(--margin);
+  display: -ms-grid;
   display: grid;
+  -ms-grid-columns: 1fr var(--gutter) 1fr var(--gutter) 1fr var(--gutter) 1fr var(--gutter) 1fr var(--gutter) 1fr var(--gutter) 1fr var(--gutter) 1fr var(--gutter) 1fr var(--gutter) 1fr var(--gutter) 1fr var(--gutter) 1fr;
   grid-template-columns: repeat(12, 1fr);
-  column-gap: var(--gutter);
+  -webkit-column-gap: var(--gutter);
+     -moz-column-gap: var(--gutter);
+          column-gap: var(--gutter);
   position: relative;
 }
 .row {
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 12;
   grid-column: 1 / span 12;
+  display: -ms-grid;
   display: grid;
+  -ms-grid-columns: 1fr var(--gutter) 1fr var(--gutter) 1fr var(--gutter) 1fr var(--gutter) 1fr var(--gutter) 1fr var(--gutter) 1fr var(--gutter) 1fr var(--gutter) 1fr var(--gutter) 1fr var(--gutter) 1fr var(--gutter) 1fr;
   grid-template-columns: repeat(12, 1fr);
   gap: var(--gutter);
   position: relative;
@@ -111,22 +123,31 @@ button:hover {
 }
 .row label:nth-child(1) {margin-left: calc((100% - var(--margin)*2 - var(--gutter)*11)/12*3 + var(--gutter)*3);}
 .row label:nth-child(2) {margin-left: calc((100% - var(--margin)*2 - var(--gutter)*11)/12*5 + var(--gutter)*5);}
-.row label:nth-child(3) {margin-left: calc((100% - var(--margin)*2 - var(--gutter)*11)/12*9 + var(--gutter)*8); transform: translateX(-100%);}
+.row label:nth-child(3) {margin-left: calc((100% - var(--margin)*2 - var(--gutter)*11)/12*9 + var(--gutter)*8); -webkit-transform: translateX(-100%); -ms-transform: translateX(-100%); transform: translateX(-100%);}
 .row label:nth-child(4) {margin-left: calc((100% - var(--margin)*2 - var(--gutter)*11)/12*9 + var(--gutter)*9);}
 
 .row>*:not(.project), .row>*>* {
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+     text-overflow: ellipsis;
 }
 .row>.client {
+  -ms-grid-column: 4;
+  -ms-grid-column-span: 2;
   grid-column: 4 / span 2;
+  width: calc(100% - var(--gutter));
 }
 .row>.project {
+  -ms-grid-column: 6;
+  -ms-grid-column-span: 3;
   grid-column: 6 / span 3;
   position: relative;
+  width: 123%;
 }
 .row>.year {
+  -ms-grid-column: 9;
+  -ms-grid-column-span: 1;
   grid-column: 9 / span 1;
   text-align: right;
 }
@@ -134,7 +155,9 @@ button:hover {
   position: absolute;
   left: -.5em;
   top: -.2em;
-  transform: translateX(-100%);
+  -webkit-transform: translateX(-100%);
+      -ms-transform: translateX(-100%);
+          transform: translateX(-100%);
 }
 .preview, .target {
   position: fixed;
@@ -143,7 +166,10 @@ button:hover {
   right: var(--margin);
   height: auto;
   overflow: visible;
+  -ms-grid-column: 10;
+  -ms-grid-column-span: 3;
   grid-column: 10 / span 3;
+  -ms-grid-row: 2;
   grid-row: 2;
   z-index: 1;
 }
@@ -157,17 +183,27 @@ button:hover {
   .row label:nth-child(4) {margin-left: calc((100% - var(--margin)*2 - var(--gutter)*11)/12*8 + var(--gutter)*8);}
 
   .row>.client {
+    -ms-grid-column: 1;
+    -ms-grid-column-span: 3;
     grid-column: 1 / span 3;
+	width: calc(100% - 50px);
   }
   .row>.project {
+    -ms-grid-column: 4;
+    -ms-grid-column-span: 4;
     grid-column: 4 / span 4;
     position: relative;
+	width: 110%;
   }
   .row>.year {
+    -ms-grid-column: 8;
+    -ms-grid-column-span: 1;
     grid-column: 8 / span 1;
     text-align: right;
   }
   .preview, .target {
+    -ms-grid-column: 9;
+    -ms-grid-column-span: 4;
     grid-column: 9 / span 4;
     width: calc((100% - var(--margin)*2 - var(--gutter)*11)/12*4 + var(--gutter)*3);
     top: unset;
@@ -178,7 +214,9 @@ button:hover {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
+        -ms-transform: translateX(-50%);
+            transform: translateX(-50%);
     width: auto;
     text-align: center;
     z-index: 2;
@@ -193,6 +231,7 @@ button:hover {
     padding: 37vw var(--margin) 15vw;
   }
   .row {
+    -ms-grid-columns: (1fr)[8];
     grid-template-columns: repeat(8, 1fr);
     z-index: 2;
   }
@@ -204,21 +243,26 @@ button:hover {
   .row label:nth-child(4) {display: none;}
 
   .row>.client {
+    -ms-grid-column: 1;
+    -ms-grid-column-span: 3;
     grid-column: 1 / span 3;
   }
   .row>.project {
+    -ms-grid-column: 4;
+    -ms-grid-column-span: 4;
     grid-column: 4 / span 4;
     position: relative;
   }
   .row>.year {
+    -ms-grid-column: 8;
+    -ms-grid-column-span: 1;
     grid-column: 8 / span 1;
     text-align: right;
   }
-  .cta {
-    /* display: none; */
-  }
   .preview, .target {
     width: calc((100% - var(--margin)*2 - var(--gutter)*7)/8*4 + var(--gutter)*3);
+    -ms-grid-column: 4;
+    -ms-grid-column-span: 4;
     grid-column: 4 / span 4;
     bottom: var(--margin);
   }
@@ -226,6 +270,8 @@ button:hover {
 @media screen and (max-width: 500px) {
   .preview, .target {
     width: calc((100% - var(--margin)*2 - var(--gutter)*7)/8*5 + var(--gutter)*4);
+    -ms-grid-column: 3;
+    -ms-grid-column-span: 5;
     grid-column: 3 / span 5;
   }
 }
@@ -233,9 +279,14 @@ button:hover {
   .row label:nth-child(2) {margin-left: calc((100% - var(--margin)*2 - var(--gutter)*7)/8*2 + var(--gutter)*2);}
   .row label:nth-child(3) {margin-left: calc((100% - var(--margin)*2 - var(--gutter)*7)/8*8 + var(--gutter)*7);}
   .row>.project {
-    grid-column: 3 / span 4;
+	width: 130%;
+    -ms-grid-column: 4;
+    -ms-grid-column-span: 3;
+    grid-column: 4 / span 3;
   }
   .row>.year {
+    -ms-grid-column: 7;
+    -ms-grid-column-span: 2;
     grid-column: 7 / span 2;
   }
 }

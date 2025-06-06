@@ -15,7 +15,8 @@
 }
 
 *, *::before, *::after {
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   -webkit-tap-highlight-color:transparent;
 }
 * {
@@ -61,7 +62,8 @@ button {
   border-radius: 0;
   text-align: inherit;
   background: none;
-  box-shadow: none;
+  -webkit-box-shadow: none;
+          box-shadow: none;
   padding: 0;
   cursor: pointer;
   border: none;
@@ -81,6 +83,11 @@ a:-webkit-any-link {
   cursor: pointer;
   text-decoration: none;
 }
+a:-moz-any-link {
+  color: inherit;
+  cursor: pointer;
+  text-decoration: none;
+}
 a:any-link {
   color: inherit;
   cursor: pointer;
@@ -91,20 +98,23 @@ a:any-link {
     color: var(--hoverColor);
   }
 }
+a:-webkit-any-link.underline {
+  text-decoration: underline;
+}
 a:-webkit-any-link.underline,
 a:any-link.underline,
 .underline {
   text-decoration: underline;
 }
 .honeymoon-120 {
-  font-family: ABCHoneymoon, Brush Script MT, 'Courier New', Courier, monospace;
+  font-family: ABCHoneymoon, Helvetica, Arial, sans-serif;;
   font-weight: 400;
   font-size: clamp(0px, 10vw, 140px);
   letter-spacing: 0;
   line-height: .8;
 }
 .honeymoon-24 {
-  font-family: ABCHoneymoon, Brush Script MT, 'Courier New', Courier, monospace;
+  font-family: ABCHoneymoon, Helvetica, Arial, sans-serif;
   font-weight: 600;
   font-size: 1.846rem;
   letter-spacing: 0;
@@ -116,9 +126,11 @@ a:any-link.underline,
   letter-spacing: 0;
   line-height: 1.431;
 }
-
 .hidden {
   display: none !important;
+}
+.invisible {
+  visibility: hidden;
 }
 .mobile-only {
   display: none;

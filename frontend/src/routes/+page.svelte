@@ -12,5 +12,5 @@ $effect(() => {
 </script>
 
 <section id="homepage">
-  <SwiperContainer index={0} menuOpen={menuOpen} projects={data.homepage}/>
+  <SwiperContainer index={0} menuOpen={menuOpen} projects={data.homepage} captionHidden={true}/>
 </section>

@@ -160,7 +160,7 @@ export async function getProject(slug) {
 					title,
 					description,
 					altText,
-					metadata {dimensions}
+					metadata {dimensions, lqip}
 				}
 			},
 			client->{ title },

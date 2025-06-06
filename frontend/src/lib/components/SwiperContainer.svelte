@@ -1,6 +1,6 @@
 <script>
 // Data
-let { index, projects } = $props()
+let { index, projects, captionHidden = false } = $props()
 
 // Imports
 import { urlFor } from '$lib/utils/image';
@@ -33,7 +33,7 @@ function handleScroll() {
 <svelte:window bind:innerWidth bind:innerHeight onscroll={handleScroll}></svelte:window>
   
 {#if innerWidth > 700}
-  <Swiper projects={projects} index={index}/>
+  <Swiper projects={projects} index={index} captionHidden={captionHidden}/>
 {:else}
   <div class="mobile-swiper">
     {#each projects as project, i}
@@ -47,9 +47,9 @@ function handleScroll() {
       width={project.reference.preview.asset.metadata.dimensions.width}
       height={project.reference.preview.asset.metadata.dimensions.height}
       alt={project.reference.preview.asset.altText}
-      src={urlFor(project.reference.preview).height(1920)}
+      src={urlFor(project.reference.preview).height(1500)}
       >
-      <p class="caption">{project.reference.client.title}, {project.reference.title}, {project.reference.date.split('-')[0]}</p>
+      <p class="caption" class:invisible={captionHidden}>{project.reference.client.title}, {project.reference.title}, {project.reference.date.split('-')[0]}</p>
       </a>
     {/each}
   </div>
@@ -62,17 +62,30 @@ function handleScroll() {
     overflow: hidden;
   }
   .project {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
   }
   .caption {
     margin-bottom: .1em;
+	opacity: 0;
   }
   .img {
-    object-fit: unset;
+    -o-object-fit: unset;
+       object-fit: unset;
     height: auto;
+    -webkit-transition: -webkit-transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition: -webkit-transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    -o-transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), -webkit-transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
   .img.S {
     max-height: unset;
@@ -86,9 +99,9 @@ function handleScroll() {
     max-height: unset;
     width: 100%;
   }
-  :global(.project.active .img.transition-1)   {transform: translateY(5%) rotate3D(1, -1, 0, 45deg) scale(.9);}
-  :global(.project.active .img.transition-2)   {transform: translateY(5%) rotate3D(-1, -1, 0, 45deg) scale(.9);}
-  :global(.project.active .img.transition-3)   {transform: translateY(5%) rotate3D(1, 1, .3, 30deg) scale(.9);}
-  :global(.project.active .img.transition-4)   {transform: translateY(5%) rotate3D(1, 1, 1, 10deg) scale(.9);}
+  :global(.project.active .img.transition-1)   {-webkit-transform: translateY(5%) rotate3D(1, -1, 0, 45deg) scale(.9);-ms-transform: translateY(5%) rotate3D(1, -1, 0, 45deg) scale(.9);transform: translateY(5%) rotate3D(1, -1, 0, 45deg) scale(.9);}
+  :global(.project.active .img.transition-2)   {-webkit-transform: translateY(5%) rotate3D(-1, -1, 0, 45deg) scale(.9);-ms-transform: translateY(5%) rotate3D(-1, -1, 0, 45deg) scale(.9);transform: translateY(5%) rotate3D(-1, -1, 0, 45deg) scale(.9);}
+  :global(.project.active .img.transition-3)   {-webkit-transform: translateY(5%) rotate3D(1, 1, .3, 30deg) scale(.9);-ms-transform: translateY(5%) rotate3D(1, 1, .3, 30deg) scale(.9);transform: translateY(5%) rotate3D(1, 1, .3, 30deg) scale(.9);}
+  :global(.project.active .img.transition-4)   {-webkit-transform: translateY(5%) rotate3D(1, 1, 1, 10deg) scale(.9);-ms-transform: translateY(5%) rotate3D(1, 1, 1, 10deg) scale(.9);transform: translateY(5%) rotate3D(1, 1, 1, 10deg) scale(.9);}
 }
 </style>

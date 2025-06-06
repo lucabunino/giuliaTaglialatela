@@ -1,9 +1,4 @@
 <script>
-// Data
-let { data, children } = $props();
-$inspect(data)
-
-// Imports
 import "../app.css";
 import { dev } from '$app/environment';
 import { page } from '$app/stores';
@@ -14,17 +9,14 @@ import { pageIn, pageOut } from '$lib/utils/transition'
 import { goto, afterNavigate, onNavigate } from "$app/navigation";
 import { onMount } from "svelte";
 
+let { data, children } = $props();
 let backPathname = $state("")
-$inspect(backPathname)
-
-// Variables
 let domLoaded = $state(false)
 let innerWidth = $state(0)
 let innerHeight = $state(0)
 let scrollY = $state(0)
 let menuOpen = $state(false)
 let canGoBack = $state()
-$inspect(canGoBack)
 
 // Functions
 function handlePageClick(event) {
@@ -38,6 +30,7 @@ function handlePageClick(event) {
 onNavigate(() => {
   canGoBack = true;
 })
+
 // Lifecycle
 $effect(() => {
   domLoaded = true
@@ -96,20 +89,7 @@ function handleKey({key}) {if (key === 'G' && dev) {viewGrid = !viewGrid}}
       </li>
       <li class="menu-item menu-ig">
         <a href="/info" class:active={$page.url.pathname === "/info"} onclick={(e) => {handlePageClick(e)}}><div><span class="page-active">I</span><span class="menu-active">nfo</span></div></a>
-        <a href={data.settings.instagramUrl} target="_blank" rel="noopener noreferrer">
-          Ig
-          <!-- <svg version="1.1" viewBox="-0.1 -0.1 8.2 8.2" xmlns="http://www.w3.org/2000/svg">
-            <g>
-              <rect class="st0" width="8.1" height="8.1" rx="2.1" ry="2.1"/>
-              <rect class="st1" x="0" y="0" width="8" height="8" rx="2" ry="2"/>
-            </g>
-            <g>
-              <ellipse class="st0" cx="4.1" cy="4.2" rx="2" ry="2"/>
-              <ellipse class="st1" cx="4.1" cy="4.2" rx="1.9" ry="1.9"/>
-            </g>
-            <circle cx="6.5" cy="1.8" r=".3"/>
-          </svg>           -->
-        </a>
+        <a href={data.settings.instagramUrl} target="_blank" rel="noopener noreferrer">Ig</a>
       </li>
     </ul>
     <button class="menu-switch" class:arrow={$page.url.pathname.includes("/archive/")} onclick={(e) => {
@@ -163,15 +143,23 @@ function handleKey({key}) {if (key === 'G' && dev) {viewGrid = !viewGrid}}
   left: 0;
   width: 100%;
   height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   padding: var(--margin) 0;
   z-index: 10;
   pointer-events: none;
 }
 .menu.open {
-  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+          backdrop-filter: blur(15px);
   pointer-events: all;
 }
 .menu-item {
@@ -190,9 +178,15 @@ function handleKey({key}) {if (key === 'G' && dev) {viewGrid = !viewGrid}}
   display: contents;
 }
 .menu-item.menu-ig {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 .menu-item.menu-ig svg {
   margin-right: calc(var(--margin) + .15em);
@@ -257,41 +251,65 @@ function handleKey({key}) {if (key === 'G' && dev) {viewGrid = !viewGrid}}
   height: 1px;
   background-color: var(--black);
   position: absolute;
+  -webkit-transition: var(--transition);
+  -o-transition: var(--transition);
   transition: var(--transition);
+  -webkit-transition-property: top, -webkit-transform, -webkit-transform-origin;
+  transition-property: top, -webkit-transform, -webkit-transform-origin;
+  -o-transition-property: top, transform, transform-origin;
   transition-property: top, transform, transform-origin;
-  transform-origin: center;
+  transition-property: top, transform, transform-origin, -webkit-transform, -webkit-transform-origin, -ms-transform-origin;
+  -webkit-transform-origin: center;
+      -ms-transform-origin: center;
+          transform-origin: center;
 }
 .line:nth-child(1) {top: 0;}
 .line:nth-child(2) {top: 50%;}
 .line:nth-child(3) {top: 100%;}
-.line:nth-child(4) {top: 100%; transform-origin:right; transform: scaleY(0) rotate(90deg) scaleX(.5);}
+.line:nth-child(4) {top: 100%; -webkit-transform-origin:right; -ms-transform-origin:right; transform-origin:right; -webkit-transform: scaleY(0) rotate(90deg) scaleX(.5); -ms-transform: scaleY(0) rotate(90deg) scaleX(.5); transform: scaleY(0) rotate(90deg) scaleX(.5);}
 .menu-switch.crossed .line:nth-child(1) {
-  transform: rotate(20deg);
+  -webkit-transform: rotate(20deg);
+      -ms-transform: rotate(20deg);
+          transform: rotate(20deg);
   top: 50%;
 }
 .menu-switch.crossed .line:nth-child(2) {
-  transform: scaleX(0);
+  -webkit-transform: scaleX(0);
+      -ms-transform: scaleX(0);
+          transform: scaleX(0);
 }
 .menu-switch.crossed .line:nth-child(3) {
-  transform: rotate(-20deg);
+  -webkit-transform: rotate(-20deg);
+      -ms-transform: rotate(-20deg);
+          transform: rotate(-20deg);
   top: 50%;
 }
 
 .menu-switch.arrow .line:nth-child(1) {
-  transform-origin: left;
-  transform: rotate(-22deg) scaleX(.5);
+  -webkit-transform-origin: left;
+      -ms-transform-origin: left;
+          transform-origin: left;
+  -webkit-transform: rotate(-22deg) scaleX(.5);
+      -ms-transform: rotate(-22deg) scaleX(.5);
+          transform: rotate(-22deg) scaleX(.5);
   top: 100%;
 }
 .menu-switch.arrow .line:nth-child(2) {
   top: 100%;
 }
 .menu-switch.arrow .line:nth-child(3) {
-  transform-origin: left;
-  transform: rotate(22deg) scaleX(.5);
+  -webkit-transform-origin: left;
+      -ms-transform-origin: left;
+          transform-origin: left;
+  -webkit-transform: rotate(22deg) scaleX(.5);
+      -ms-transform: rotate(22deg) scaleX(.5);
+          transform: rotate(22deg) scaleX(.5);
 }
 
 .menu-switch.arrow .line:nth-child(4) {
-  transform: scaleY(.5) scaleX(1) rotate(90deg);
+  -webkit-transform: scaleY(.5) scaleX(1) rotate(90deg);
+      -ms-transform: scaleY(.5) scaleX(1) rotate(90deg);
+          transform: scaleY(.5) scaleX(1) rotate(90deg);
 }
 @media screen and (min-width: 701px) {
   .menu-switch:hover .line {
@@ -315,8 +333,12 @@ main {
 
 /* Footer */
 footer {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   margin-bottom: 2em;
   z-index: 2;
   position: relative;
