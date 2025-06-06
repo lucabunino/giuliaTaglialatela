@@ -7,14 +7,14 @@ export async function GET() {
   const archive = await getArchive();
 
   // Create XML for individual project pages with their corresponding images
-  const archiveSlugsXML = archive.map(project => {
+  const archiveSlugsXML = archive.map(project => {	
     return `
       <url>
         <loc>${baseUrl}/archive/${project.slug.current}</loc>
-        <lastmod>${project.year}</lastmod>
+        <lastmod>${project._updatedAt}</lastmod>
         <priority>0.80</priority>
         <image:image>
-          <image:loc>${urlFor(project.thumbnail).url()}</image:loc>
+          <image:loc>${urlFor(project.preview).url()}</image:loc>
         </image:image>
       </url>`;
   }).join('');

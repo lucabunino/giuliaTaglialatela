@@ -114,6 +114,7 @@ export async function getArchive() {
 	return await client.fetch(
 		`
 		*[_type == "project" && !(_id in path('drafts.**'))]|order(orderRank) {
+			_updatedAt,
 			preview {
 				asset->{
 					_ref, _id, _type,
