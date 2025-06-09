@@ -28,7 +28,7 @@ fields: [
 				{ title: 'Hidden', value: 'hidden' },
 			],
 		},
-		initialValue: 'public',
+		initialValue: 'hidden',
 		validation: (Rule) => Rule.required(),
 	},
 	{
@@ -45,33 +45,25 @@ fields: [
 		validation: (Rule) => Rule.required(),
 	},
 	{
-	name: 'singlePaged',
-	type: 'boolean',
-	description: "Turn this off to hide the link in Archive",
-	initialValue: true,
+		name: 'singlePaged',
+		type: 'boolean',
+		description: "Turn this off to hide the link in Archive",
+		initialValue: true,
 	},
 	{
-	name: 'date',
-	type: 'date',
-	options: {
-		dateFormat: 'DD.MM.YYYY'
-	},
-	validation: (Rule) => Rule.required()
+		name: 'client',
+		type: 'reference',
+		to: [{ type: 'client' }]
 	},
 	{
-	name: 'client',
-	type: 'reference',
-	to: [{ type: 'client' }]
-	},
-	{
-	name: 'photographer',
-	type: 'reference',
-	to: [{ type: 'photographer' }]
+		name: 'photographer',
+		type: 'reference',
+		to: [{ type: 'photographer' }]
 	},
 	{ 
-	name: 'preview',
-	type: 'image',
-	validation: (Rule) => Rule.required(),
+		name: 'preview',
+		type: 'image',
+		validation: (Rule) => Rule.required(),
 	},
 	{
 	name: 'images',
