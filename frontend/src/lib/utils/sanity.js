@@ -41,7 +41,6 @@ export async function getHomepage() {
 				_type,
 				title,
 				slug,
-				date,
 				client->{ title },
 				photographer->{ title },
 				preview {
@@ -67,7 +66,6 @@ export async function getCommercial() {
 				_type,
 				title,
 				slug,
-				date,
 				client->{ title },
 				photographer->{ title },
 				preview {
@@ -93,7 +91,6 @@ export async function getInterior() {
 				_type,
 				title,
 				slug,
-				date,
 				client->{ title },
 				photographer->{ title },
 				preview {
@@ -113,8 +110,9 @@ export async function getInterior() {
 export async function getArchive() {
 	return await client.fetch(
 		`
-		*[_type == "project" && !(_id in path('drafts.**'))]|order(orderRank) {
+		*[_type == "project" && !(_id in path('drafts.**')) && status == "public"]|order(orderRank) {
 			_updatedAt,
+			kind,
 			preview {
 				asset->{
 					_ref, _id, _type,
@@ -126,7 +124,6 @@ export async function getArchive() {
 			},
 			client->{ title },
 			photographer->{ title },
-			date,
 			singlePaged,
 			slug,
 			title
@@ -166,7 +163,6 @@ export async function getProject(slug) {
 			},
 			client->{ title },
 			photographer->{ title },
-			date,
 			slug,
 			title
 		}

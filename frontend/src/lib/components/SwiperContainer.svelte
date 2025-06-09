@@ -49,7 +49,7 @@ function handleScroll() {
       alt={project.reference.preview.asset.altText}
       src={urlFor(project.reference.preview).height(1500)}
       >
-      <p class="caption" class:invisible={captionHidden}>{project.reference.client.title}, {project.reference.title}, {project.reference.date.split('-')[0]}</p>
+      <p class="caption" class:invisible={captionHidden}>{project.reference.client.title}, {project.reference.title}</p>
       </a>
     {/each}
   </div>

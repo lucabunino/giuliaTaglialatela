@@ -13,7 +13,7 @@ let { data } = $props()
 
 <section id="project">
   <div class="project-info">
-    <p class="client">{data.project[0].client.title}, {data.project[0].title}, {data.project[0].date.split('-')[0]}<span class="mobile-only">,</span></p>
+    <p class="client">{data.project[0].client.title}, {data.project[0].title}<span class="mobile-only">,</span></p>
     {#if data.project[0].photographer}<p class="client">Ph. {data.project[0].photographer.title}</p>{/if}
   </div>
   {#if data.project[0].images}

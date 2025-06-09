@@ -119,7 +119,7 @@ onswiperrealindexchange={onRealIndexChange}
 <button class="swiper-button swiper-button-prev" onclick={() => addClicked('.swiper-slide-active>a>img')} onmouseover={() => setCta("Prev")} onmouseleave={() => setCta("")}></button>
 <button class="swiper-button swiper-button-next" onclick={() => addClicked('.swiper-slide-active>a>img')} onmouseover={() => setCta("Next")} onmouseleave={() => setCta("")}></button>
 <p translate="no" id="cta" class="honeymoon-120" style={cta === "" ? `-webkit-transform: translateX(${(mouse.x / innerWidth)*-100}%);-ms-transform: translateX(${(mouse.x / innerWidth)*-100}%);transform: translateX(${(mouse.x / innerWidth)*-100}%);left: ${mouse.x}px;top: ${mouse.y}px;` : `-webkit-transform: translateX(${(mouse.x / innerWidth)*-100}%);-ms-transform: translateX(${(mouse.x / innerWidth)*-100}%);transform: translateX(${(mouse.x / innerWidth)*-100}%);left: ${mouse.x}px;top: ${mouse.y}px;`}>{cta}</p>
-<p class="project-info" class:invisible={captionHidden}><span>{currentProject.reference.title}</span>{#if currentProject.reference.client}<span>, {currentProject.reference.client.title}</span>{/if}<span>, {currentProject.reference.date.split('-')[0]}</span></p>
+<p class="project-info" class:invisible={captionHidden}><span>{currentProject.reference.title}</span>{#if currentProject.reference.client}<span>, {currentProject.reference.client.title}</span>{/if}</p>
 
 <style>
 swiper-slide a {
