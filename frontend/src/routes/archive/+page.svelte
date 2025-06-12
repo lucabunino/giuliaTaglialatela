@@ -9,7 +9,7 @@ let commercialIndex = $state(0)
 let commercialHover = $derived(data.commercial[commercialIndex])
 let commercialImg = $derived(commercialHover.preview)
 
-let interiorIndex = $state(0)
+let interiorIndex = $state(null)
 let interiorHover = $derived(data.interior[interiorIndex])
 let interiorImg = $derived(interiorHover.preview)
 
@@ -43,7 +43,7 @@ $effect(() => {
 <svelte:window bind:innerWidth></svelte:window>
 
 <section id="archive" translate="no">
-	<h3>Commercials</h3>
+	<h3>Commercial</h3>
 	{#each data.commercial as project, i}
 	{#if project.singlePaged && innerWidth > 700}
 		<a class="row hoverColor" class:mobileActive={i === commercialIndex} href="archive/{project.slug.current}" onmouseover={() => {commercialIndex = i; lastHover = "commercial"}} onclick={(e) => {mobileClick(e)}}>
@@ -56,13 +56,13 @@ $effect(() => {
 		<p class="client">{project.client.title}</p>
 		<p class="project">{project.title}</p>
 		{#if project.singlePaged}
-			<a class="mobile-only cta honeymoon-24" class:mobileActive={i === commercialIndex} href="archive/{commercialHover.slug.current}">View</a>
+			<a class="mobile-only cta honeymoon-24" class:mobileActive={i === commercialIndex} href="archive/{project.slug.current}">View</a>
 		{/if}
 	</button>
 	{/if}
 	{/each}
 
-	<h3 class="mt">Interiors</h3>
+	<h3 class="mt">Interior</h3>
 	{#each data.interior as project, i}
 	{#if project.singlePaged && innerWidth > 700}
 		<a class="row hoverColor" class:mobileActive={i === interiorIndex} href="archive/{project.slug.current}" onmouseover={() => {interiorIndex = i; lastHover = "interior"}} onclick={(e) => {mobileClick(e)}}>
@@ -75,7 +75,7 @@ $effect(() => {
 		<p class="client">{project.client.title}</p>
 		<p class="project">{project.title}</p>
 		{#if project.singlePaged}
-			<a class="mobile-only cta honeymoon-24" class:mobileActive={i === interiorIndex} href="archive/{interiorHover.slug.current}">View</a>
+			<a class="mobile-only cta honeymoon-24" class:mobileActive={i === interiorIndex} href="archive/{project.slug.current}">View</a>
 		{/if}
 	</button>
 	{/if}
@@ -114,6 +114,7 @@ $effect(() => {
 @media screen and (min-width: 701px) {
 	.hoverColor:hover {
 		color: var(--hoverColor);
+		mix-blend-mode: normal;
 	}
 }
 #archive {
@@ -137,11 +138,13 @@ $effect(() => {
 	grid-template-columns: repeat(12, 1fr);
 	gap: var(--gutter);
 	position: relative;
+	mix-blend-mode: difference;
+	color: var(--white);
 }
 h3 {
-	-ms-grid-column: 4;
-	-ms-grid-column-span: 9;
-	grid-column: 4 / span 9;
+	-ms-grid-column: 1;
+	-ms-grid-column-span: 12;
+	grid-column: 1 / span 12;
 	margin-bottom: 2em;
 	height: 1.431rem;
 	text-align: center;
@@ -194,11 +197,6 @@ button:hover {
 	visibility: hidden;
 }
 @media screen and (max-width: 900px) {
-	h3 {
-		-ms-grid-column: 1;
-		-ms-grid-column-span: 12;
-		grid-column: 1 / span 12;
-	}
 	.row>.client {
 		-ms-grid-column: 1;
 		-ms-grid-column-span: 2;
@@ -225,16 +223,12 @@ button:hover {
 	}
 }
 @media screen and (max-width: 700px) {
-	h3 {
-		-ms-grid-column: 1;
-		-ms-grid-column-span: 12;
-		grid-column: 1 / span 12;
-	}
 	.mobileActive {
 		color: var(--hoverColor);
+		mix-blend-mode: normal;
 	}
 	#archive {
-		padding: 37vw var(--margin) 15vw;
+		padding: 37vw var(--margin) 45vw;
 	}
 	.row {
 		-ms-grid-columns: (1fr)[8];
@@ -287,7 +281,6 @@ button:hover {
 		grid-column: 7 / span 2;
 	}
 	.preview, .target {
-		width: calc((100% - var(--margin)*2 - var(--gutter)*7)/8*5 + var(--gutter)*4);
 		-ms-grid-column: 3;
 		-ms-grid-column-span: 5;
 		grid-column: 3 / span 5;

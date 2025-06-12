@@ -158,8 +158,8 @@ function handleKey({key}) {if (key === 'G' && dev) {viewGrid = !viewGrid}}
   pointer-events: none;
 }
 .menu.open {
-  -webkit-backdrop-filter: blur(15px);
-          backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px) brightness(1.1) saturate(1.5);
+          backdrop-filter: blur(15px) brightness(1.1) saturate(1.5);
   pointer-events: all;
 }
 .menu-item {

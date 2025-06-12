@@ -75,7 +75,6 @@ function handleScroll() {
   }
   .caption {
     margin-bottom: .1em;
-	opacity: 0;
   }
   .img {
     -o-object-fit: unset;
