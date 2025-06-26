@@ -8,7 +8,7 @@ if (!PUBLIC_SANITY_PROJECT_ID || !PUBLIC_SANITY_DATASET) {
 export const client = createClient({
 	projectId: PUBLIC_SANITY_PROJECT_ID,
 	dataset: PUBLIC_SANITY_DATASET,
-	useCdn: false, // `false` if you want to ensure fresh data
+	useCdn: true, // `false` if you want to ensure fresh data
 	apiVersion: '2025-03-19', // date of setup
 });
 
@@ -57,10 +57,10 @@ export async function getHomepage() {
 		`
 	);
 }
-export async function getCommercial() {
+export async function getCommercials() {
 	return await client.fetch(
 		`
-		*[_type == "selection" && !(_id in path('drafts.**')) && _id == "commercial"][0].selected[] {
+		*[_type == "selectionCommercial" && !(_id in path('drafts.**')) && _id == "selectionCommercial"][0].selected[] {
 			...,
 			reference->{
 				_type,
@@ -82,10 +82,10 @@ export async function getCommercial() {
 		`
 	);
 }
-export async function getInterior() {
+export async function getInteriors() {
 	return await client.fetch(
 		`
-		*[_type == "selection" && !(_id in path('drafts.**')) && _id == "interior"][0].selected[] {
+		*[_type == "selectionInterior" && !(_id in path('drafts.**'))][0].selected[] {
 			...,
 			reference->{
 				_type,
@@ -110,9 +110,8 @@ export async function getInterior() {
 export async function getArchive() {
 	return await client.fetch(
 		`
-		*[_type == "project" && !(_id in path('drafts.**')) && status == "public"]|order(orderRank) {
-			_updatedAt,
-			kind,
+		*[_type in ["commercial", "interior"] && !(_id in path('drafts.**')) && status == "public"]|order(orderRank) {
+			_type,
 			preview {
 				asset->{
 					_ref, _id, _type,
@@ -148,6 +147,49 @@ export async function getDisplaceImages() {
 		`
 	);
 }
+
+export async function getInterior(slug) {
+	return await client.fetch(
+		`
+		*[_type == "interior" && slug.current == $slug] {
+			images[] {
+				asset->{
+					_ref, _id, _type,
+					title,
+					description,
+					altText,
+					metadata {dimensions, lqip}
+				}
+			},
+			client->{ title },
+			photographer->{ title },
+			slug,
+			title
+		}
+		`, { slug });
+}
+
+export async function getCommercial(slug) {
+	return await client.fetch(
+		`
+		*[_type == "commercial" && slug.current == $slug] {
+			images[] {
+				asset->{
+					_ref, _id, _type,
+					title,
+					description,
+					altText,
+					metadata {dimensions, lqip}
+				}
+			},
+			client->{ title },
+			photographer->{ title },
+			slug,
+			title
+		}
+		`, { slug });
+}
+
 export async function getProject(slug) {
 	return await client.fetch(
 		`

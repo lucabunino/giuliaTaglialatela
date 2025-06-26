@@ -93,7 +93,7 @@ onswiperrealindexchange={onRealIndexChange}
 			<a class="project"
 			onmouseover={() => setCta("View")}
 			onmouseleave={() => setCta("")}
-			href="archive/{project.reference.slug.current}"
+			href="{project.reference._type}/{project.reference.slug.current}"
 			>
 			<img
 			class="img {project.size} transition-{i%4+1}"

@@ -10,15 +10,17 @@ export const myStructure = (S, context) => {
       .icon(HomeIcon)
       .child(S.document().schemaType('selection').documentId('homepage')),
     S.listItem()
-      .title('Commercial')
+      .title('Commercial page')
       .icon(BasketIcon)
-      .child(S.document().schemaType('selection').documentId('commercial')),
+      .child(S.document().schemaType('selectionCommercial').documentId('selectionCommercial')),
     S.listItem()
-      .title('Interior')
+      .title('Interior page')
       .icon(DashboardIcon)
-      .child(S.document().schemaType('selection').documentId('interior')),
+      .child(S.document().schemaType('selectionInterior').documentId('selectionInterior')),
     S.divider(),
-	orderableDocumentListDeskItem({type: 'project', title: 'Archive', icon: ProjectsIcon, S, context}),
+	orderableDocumentListDeskItem({type: 'commercial', title: 'Commercials', icon: BasketIcon, S, context}),
+	orderableDocumentListDeskItem({type: 'interior', title: 'Interiors', icon: DashboardIcon, S, context}),
+	S.divider(),
     S.documentTypeListItem('client')
       .title('Clients'),
     S.documentTypeListItem('photographer')

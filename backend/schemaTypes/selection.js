@@ -1,9 +1,6 @@
-import {HomeIcon} from '@sanity/icons'
-
 export default {
 	name: 'selection',
 	type: 'document',
-	icon: HomeIcon,
 	fields: [
 		{
 			name: 'title',
@@ -22,7 +19,7 @@ export default {
 						{
 							name: 'reference',
 							type: 'reference',
-							to: [{ type: 'project' }],
+							to: [{ type: 'commercial' },{ type: 'interior' }],
 							options: {
 								filter: 'status == $status',
 								filterParams: { status: 'public' }
@@ -48,16 +45,14 @@ export default {
 					preview: {
 						select: {
 							title: 'reference.title',
-							date: 'reference.date',
 							size: 'size',
 							client: 'reference.client.title',
 							preview: 'reference.preview'
 						},
-						prepare({ title, date, client, preview, size }) {
-							const formattedYear = date ? new Date(date).getFullYear() : 'No year';
+						prepare({ title, client, preview, size }) {
 							return {
 								title: `[${size}] ${title}`,
-								subtitle: `${formattedYear} × ${client || 'No client'}`,
+								subtitle: `× ${client || 'No client'}`,
 								media: preview,
 							};
 						}

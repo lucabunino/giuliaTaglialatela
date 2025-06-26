@@ -7,6 +7,6 @@ let { data, menuOpen } = $props()
   {#if data.seo[0].SEOTitle}<title>{data.seo[0].SEOTitle} | Commercial</title>{/if}
 </svelte:head>
 
-<section id="commercial">
-  <SwiperContainer index={1} menuOpen={menuOpen} projects={data.commercial}/>
+<section id="commercials">
+  <SwiperContainer index={1} menuOpen={menuOpen} projects={data.commercials}/>
 </section>

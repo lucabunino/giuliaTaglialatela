@@ -38,7 +38,7 @@ function handleScroll() {
   <div class="mobile-swiper">
     {#each projects as project, i}
       <a class="project"
-      href="archive/{project.reference.slug.current}"
+      href="{project.reference._type}/{project.reference.slug.current}"
       bind:this={projectsElements[i]}
       class:active={aboveElements.includes(i)}
       >

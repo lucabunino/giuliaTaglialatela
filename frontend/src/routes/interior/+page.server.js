@@ -1,11 +1,11 @@
-import { getInterior } from '$lib/utils/sanity';
+import { getInteriors } from '$lib/utils/sanity';
 import { error } from '@sveltejs/kit';
 
 export async function load() {
-	const interior = await getInterior();
-	if (interior) {
+	const interiors = await getInteriors();
+	if (interiors) {
 		return {
-			interior
+			interiors
 		};
 	}
   throw error(404, 'Not found');

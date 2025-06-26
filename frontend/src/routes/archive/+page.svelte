@@ -1,6 +1,7 @@
 <script>
 // Data
 let { data } = $props()
+$inspect(data)
 
 // Variables
 let lastHover = $state('commercial')
@@ -46,7 +47,7 @@ $effect(() => {
 	<h3>Commercial</h3>
 	{#each data.commercial as project, i}
 	{#if project.singlePaged && innerWidth > 700}
-		<a class="row hoverColor" class:mobileActive={i === commercialIndex} href="archive/{project.slug.current}" onmouseover={() => {commercialIndex = i; lastHover = "commercial"}} onclick={(e) => {mobileClick(e)}}>
+		<a class="row hoverColor" class:mobileActive={i === commercialIndex} href="{project._type}/{project.slug.current}" onmouseover={() => {commercialIndex = i; lastHover = "commercial"}} onclick={(e) => {mobileClick(e)}}>
 		<p translate="no" class="client">{project.client.title}</p>
 		<p class="project">{project.title}</p>
 		<span class="cta honeymoon-24">View</span>
@@ -56,7 +57,7 @@ $effect(() => {
 		<p class="client">{project.client.title}</p>
 		<p class="project">{project.title}</p>
 		{#if project.singlePaged}
-			<a class="mobile-only cta honeymoon-24" class:mobileActive={i === commercialIndex} href="archive/{project.slug.current}">View</a>
+			<a class="mobile-only cta honeymoon-24" class:mobileActive={i === commercialIndex} href="{project._type}/{project.slug.current}">View</a>
 		{/if}
 	</button>
 	{/if}
@@ -65,7 +66,7 @@ $effect(() => {
 	<h3 class="mt">Interior</h3>
 	{#each data.interior as project, i}
 	{#if project.singlePaged && innerWidth > 700}
-		<a class="row hoverColor" class:mobileActive={i === interiorIndex} href="archive/{project.slug.current}" onmouseover={() => {interiorIndex = i; lastHover = "interior"}} onclick={(e) => {mobileClick(e)}}>
+		<a class="row hoverColor" class:mobileActive={i === interiorIndex} href="{project._type}/{project.slug.current}" onmouseover={() => {interiorIndex = i; lastHover = "interior"}} onclick={(e) => {mobileClick(e)}}>
 		<p translate="no" class="client">{project.client.title}</p>
 		<p class="project">{project.title}</p>
 		<span class="cta honeymoon-24">View</span>
@@ -75,7 +76,7 @@ $effect(() => {
 		<p class="client">{project.client.title}</p>
 		<p class="project">{project.title}</p>
 		{#if project.singlePaged}
-			<a class="mobile-only cta honeymoon-24" class:mobileActive={i === interiorIndex} href="archive/{project.slug.current}">View</a>
+			<a class="mobile-only cta honeymoon-24" class:mobileActive={i === interiorIndex} href="{project._type}/{project.slug.current}">View</a>
 		{/if}
 	</button>
 	{/if}

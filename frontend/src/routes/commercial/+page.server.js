@@ -1,11 +1,11 @@
-import { getCommercial } from '$lib/utils/sanity';
+import { getCommercials } from '$lib/utils/sanity';
 import { error } from '@sveltejs/kit';
 
 export async function load() {
-	const commercial = await getCommercial();
-	if (commercial) {
+	const commercials = await getCommercials();
+	if (commercials) {
 		return {
-			commercial
+			commercials
 		};
 	}
   throw error(404, 'Not found');
