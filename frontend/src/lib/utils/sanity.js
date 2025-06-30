@@ -110,7 +110,7 @@ export async function getInteriors() {
 export async function getArchive() {
 	return await client.fetch(
 		`
-		*[_type in ["commercial", "interior"] && !(_id in path('drafts.**')) && status == "public"]|order(orderRank) {
+		*[_type in ["commercial", "interior"] && !(_id in path('drafts.**')) && status == "public"] {
 			_type,
 			preview {
 				asset->{
@@ -126,7 +126,7 @@ export async function getArchive() {
 			singlePaged,
 			slug,
 			title
-		}
+		} | order(client.title asc)
 		`
 	);
 }

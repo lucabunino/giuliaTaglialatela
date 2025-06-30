@@ -1,11 +1,11 @@
-import {orderRankField} from '@sanity/orderable-document-list'
+// import {orderRankField} from '@sanity/orderable-document-list'
 import { EditIcon } from "@sanity/icons";
 
 export default {
 name: 'commercial',
 type: 'document',
 fields: [
-	orderRankField({ type: "project" }),
+	// orderRankField({ type: "project" }),
 	{
 	name: 'title',
 	type: 'string',

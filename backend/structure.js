@@ -18,8 +18,12 @@ export const myStructure = (S, context) => {
       .icon(DashboardIcon)
       .child(S.document().schemaType('selectionInterior').documentId('selectionInterior')),
     S.divider(),
-	orderableDocumentListDeskItem({type: 'commercial', title: 'Commercials', icon: BasketIcon, S, context}),
-	orderableDocumentListDeskItem({type: 'interior', title: 'Interiors', icon: DashboardIcon, S, context}),
+	S.documentTypeListItem('commercial')
+      .title('Commercials')
+	  .icon(BasketIcon),
+	S.documentTypeListItem('interior')
+      .title('Interiors')
+	  .icon(DashboardIcon),
 	S.divider(),
     S.documentTypeListItem('client')
       .title('Clients'),
