@@ -92,7 +92,7 @@ function handleKey({key}) {if (key === 'G' && dev) {viewGrid = !viewGrid}}
         <a href={data.settings.instagramUrl} target="_blank" rel="noopener noreferrer">Ig</a>
       </li>
     </ul>
-    <button class="menu-switch" class:arrow={$page.url.pathname.includes("/archive/")} onclick={(e) => {
+    <button class="menu-switch" aria-label="Menu" class:arrow={$page.url.pathname.includes("/archive/")} onclick={(e) => {
       if ($page.url.pathname.includes("/archive/")) {
         if (canGoBack) {
           history.back()
@@ -188,29 +188,6 @@ function handleKey({key}) {if (key === 'G' && dev) {viewGrid = !viewGrid}}
       -ms-flex-align: center;
           align-items: center;
 }
-.menu-item.menu-ig svg {
-  margin-right: calc(var(--margin) + .15em);
-  width: 7vw;
-  fill: var(--black);
-}
-.menu-item.menu-ig .st0, .st1 {
-  fill: none;
-}
-.menu-item.menu-ig .st1 {
-  stroke: var(--black);
-  stroke-width: 0.01vw;
-}
-@media screen and (min-width: 701px) {
-  .menu-item.menu-ig svg:hover {
-    fill: var(--hoverColor);
-  }
-  .menu-item.menu-ig svg:hover .st1 {
-    stroke: var(--hoverColor);
-    stroke-width: 0.01vw;
-  }
-}
-
-
 .menu-active {opacity: 0;pointer-events: none;}
 .open .menu-active {opacity: 1;pointer-events: all;}
 
@@ -224,13 +201,6 @@ function handleKey({key}) {if (key === 'G' && dev) {viewGrid = !viewGrid}}
   }
   .menu-item {
     margin: 0 var(--margin) 0 -.25em;
-  }
-  .menu-item.menu-ig svg {
-    margin-right: calc(var(--margin) + .25em);
-    width: 14vw;
-  }
-  .menu-item.menu-ig .st1 {
-    stroke-width: 0.02vw;
   }
 }
 

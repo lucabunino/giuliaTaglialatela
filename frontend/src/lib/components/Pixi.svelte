@@ -29,9 +29,9 @@
     const texture = await Assets.load(previewUrl);
     let mainSprite = new Sprite(texture);
     mainSprite.anchor.set(0.5);
-    if (app.stage && mainSprite) {
-      app.stage.addChild(mainSprite);
-    }
+	if (!app.stage?.children.includes(mainSprite)) {
+		app.stage.addChild(mainSprite);
+	}
   
     // Load displacement texture
     let displacementSprite = new Sprite(await Assets.load(displaceUrl));

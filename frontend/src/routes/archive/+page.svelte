@@ -47,13 +47,13 @@ $effect(() => {
 	<h3>Commercial</h3>
 	{#each data.commercial as project, i}
 	{#if project.singlePaged && innerWidth > 700}
-		<a class="row hoverColor" class:mobileActive={i === commercialIndex} href="{project._type}/{project.slug.current}" onmouseover={() => {commercialIndex = i; lastHover = "commercial"}} onclick={(e) => {mobileClick(e)}}>
+		<a class="row hoverColor" class:mobileActive={i === commercialIndex} href="{project._type}/{project.slug.current}" onmouseover={() => {commercialIndex = i; lastHover = "commercial"}} onfocus={() => {commercialIndex = i; lastHover = "commercial"}} onclick={(e) => {mobileClick(e)}}>
 		<p translate="no" class="client">{project.client.title}</p>
 		<p class="project">{project.title}</p>
 		<span class="cta honeymoon-24">View</span>
 		</a>
 	{:else}
-	<button class="row hoverColor" class:mobileActive={i === commercialIndex} onmouseover={() => {commercialIndex = i; lastHover = "commercial"}}>
+	<button class="row hoverColor" class:mobileActive={i === commercialIndex} onmouseover={() => {commercialIndex = i; lastHover = "commercial"}} onfocus={() => {commercialIndex = i; lastHover = "commercial"}}>
 		<p class="client">{project.client.title}</p>
 		<p class="project">{project.title}</p>
 		{#if project.singlePaged}
@@ -66,13 +66,13 @@ $effect(() => {
 	<h3 class="mt">Interior</h3>
 	{#each data.interior as project, i}
 	{#if project.singlePaged && innerWidth > 700}
-		<a class="row hoverColor" class:mobileActive={i === interiorIndex} href="{project._type}/{project.slug.current}" onmouseover={() => {interiorIndex = i; lastHover = "interior"}} onclick={(e) => {mobileClick(e)}}>
+		<a class="row hoverColor" class:mobileActive={i === interiorIndex} href="{project._type}/{project.slug.current}" onmouseover={() => {interiorIndex = i; lastHover = "interior"}} onfocus={() => {interiorIndex = i; lastHover = "interior"}} onclick={(e) => {mobileClick(e)}}>
 		<p translate="no" class="client">{project.client.title}</p>
 		<p class="project">{project.title}</p>
 		<span class="cta honeymoon-24">View</span>
 		</a>
 	{:else}
-	<button class="row hoverColor" class:mobileActive={i === interiorIndex} onmouseover={() => {interiorIndex = i; lastHover = "interior"}}>
+	<button class="row hoverColor" class:mobileActive={i === interiorIndex} onmouseover={() => {interiorIndex = i; lastHover = "interior"}} onfocus={() => {interiorIndex = i; lastHover = "interior"}}>
 		<p class="client">{project.client.title}</p>
 		<p class="project">{project.title}</p>
 		{#if project.singlePaged}
@@ -149,6 +149,9 @@ h3 {
 	margin-bottom: 2em;
 	height: 1.431rem;
 	text-align: center;
+	mix-blend-mode: difference;
+    color: var(--white);
+    z-index: 2;
 }
 h3:not(:first-of-type) {
 	margin-top: 2em;
