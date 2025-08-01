@@ -1,9 +1,15 @@
 <script>
+import Pixi from '$lib/components/Pixi.svelte'
+import { fade } from "svelte/transition";
 import { urlFor } from '$lib/utils/image';
 let { data } = $props()
 
 let indexPortrait = $state(0)
-let aboutImage = $derived(data.info.aboutImages[indexPortrait])
+let aboutImage = $derived(data.info.aboutImages?.[indexPortrait])
+
+let innerWidth = $state()
+let canvasWidth = $state(500)
+let canvasHeight = $state(625)
 </script>
 
 <svelte:head>
@@ -18,7 +24,14 @@ let aboutImage = $derived(data.info.aboutImages[indexPortrait])
 		<li><a href="mailto:{data.info.email}">{data.info.email}</a></li>
 		<li><a href="tel:{data.info.phone.replace(/[^\d+]/g, '')}">{data.info.phone}</a></li>
 	</ul>
-	<img alt="About image of Giulia Taglialatela"
+	<!-- <img alt="About image of Giulia Taglialatela"
+	onclick={() => {
+		if (data.info.aboutImages?.length - 1 > indexPortrait) {
+			indexPortrait++
+		} else {
+			indexPortrait = 0
+		}
+	}}
 	srcset="
 		{urlFor(aboutImage).width(600)} 400w,
 		{urlFor(aboutImage).width(800)} 800w,
@@ -27,52 +40,92 @@ let aboutImage = $derived(data.info.aboutImages[indexPortrait])
 	"
 	sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 700px"
 	src={urlFor(aboutImage).width(1000)}
-	>
+	> -->
+	{#if aboutImage}
+		<div class="image-wrapper"
+		onclick={() => {
+		if (data.info.aboutImages?.length - 1 > indexPortrait) {
+				indexPortrait++
+			} else {
+				indexPortrait = 0
+			}
+		}}
+		>
+			<img class="target" src={urlFor(aboutImage).width(1080)} alt={aboutImage.asset.altText} bind:clientWidth={canvasWidth} bind:clientHeight={canvasHeight} >
+			{#key aboutImage}
+				<div
+				class="preview"
+				in:fade|global={{ duration: 100, delay: 0 }}
+				out:fade|global={{ duration: 100, delay: 50}}
+				>
+					<Pixi displaceImages={data.displaceImages} preview={aboutImage} singlePaged={true} canvasWidth={canvasWidth} canvasHeight={canvasHeight} fitCover={true}/>
+				</div>
+			{/key}
+			<span class="counter honeymoon-120">{indexPortrait+1}/{data.info.aboutImages?.length}</span>
+		</div>
+	{/if}
 </section>
 
 <style>
 #info {
-padding: 11em var(--margin) 2em;
-display: -ms-grid;
-display: grid;
--ms-grid-columns: 1fr var(--gutter) 1fr var(--gutter) 1fr var(--gutter) 1fr var(--gutter) 1fr var(--gutter) 1fr var(--gutter) 1fr var(--gutter) 1fr var(--gutter) 1fr var(--gutter) 1fr var(--gutter) 1fr var(--gutter) 1fr;
-grid-template-columns: repeat(12, 1fr);
--webkit-column-gap: var(--gutter);
-	-moz-column-gap: var(--gutter);
-		column-gap: var(--gutter);
-row-gap: calc(var(--gutter)/2);
+	padding: 11em var(--margin) 2em;
+	display: -ms-grid;
+	display: grid;
+	-ms-grid-columns: 1fr var(--gutter) 1fr var(--gutter) 1fr var(--gutter) 1fr var(--gutter) 1fr var(--gutter) 1fr var(--gutter) 1fr var(--gutter) 1fr var(--gutter) 1fr var(--gutter) 1fr var(--gutter) 1fr var(--gutter) 1fr;
+	grid-template-columns: repeat(12, 1fr);
+	-webkit-column-gap: var(--gutter);
+		-moz-column-gap: var(--gutter);
+			column-gap: var(--gutter);
+	row-gap: calc(var(--gutter)/2);
 }
 p {
--ms-grid-column: 1;
--ms-grid-column-span: 6;
-grid-column: 1 / span 6;
+	-ms-grid-column: 1;
+	-ms-grid-column-span: 8;
+	grid-column: 1 / span 8;
 }
-div {
--ms-grid-column: 1;
--ms-grid-column-span: 6;
-grid-column: 1 / span 6;
-display: -webkit-box;
-display: -ms-flexbox;
-display: flex;
-gap: calc(var(--gutter)/2);
+ul {
+	-ms-grid-column: 1;
+	-ms-grid-column-span: 8;
+	grid-column: 1 / span 8;
 }
-img {
-width: calc((100% - var(--gutter)*2)/3);
+.image-wrapper {
+	aspect-ratio: .8;
+	width: calc(((100% - var(--margin)*2 - var(--gutter)*11)/12) * 4 + var(--gutter)*3);
+	position: absolute;
+	bottom: var(--margin);
+	right: var(--margin);
+	display: flex;
+	align-items: center;
 }
-
+.preview, .target {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	cursor: pointer;
+	position: absolute;
+}
+.counter {
+	position: absolute;
+	top: .5em;
+	left: -.5em;
+	z-index: 2;
+	pointer-events: none;
+	opacity: 0;
+}
+.image-wrapper:hover .counter {
+	opacity: 1;
+}
 @media screen and (max-width: 1100px) {
 p {
 	-ms-grid-column: 1;
 	-ms-grid-column-span: 8;
 	grid-column: 1 / span 8;
 }
-div {
+ul {
 	-ms-grid-column: 1;
 	-ms-grid-column-span: 8;
 	grid-column: 1 / span 8;
-}
-img {
-	width: calc((100% - var(--gutter))/2);
+	margin-top: 1rem;
 }
 }
 
@@ -85,11 +138,31 @@ p {
 	-ms-grid-column-span: 12;
 	grid-column: 1 / span 12;
 }
-div {
+.image-wrapper {
+	aspect-ratio: .8;
+	position: relative;
 	-ms-grid-column: 1;
 	-ms-grid-column-span: 12;
 	grid-column: 1 / span 12;
-	gap: var(--gutter);
+	width: 100%;
+	bottom: unset;
+	right: unset;
+	display: flex;
+	align-items: center;
+	margin-top: 2rem;
+}
+.preview, .target {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	cursor: pointer;
+	position: absolute;
+}
+.counter {
+	top: -.5em;
+	left: unset;
+	right: 0;
+	opacity: 1;
 }
 }
 </style>

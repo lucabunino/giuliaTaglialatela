@@ -8,9 +8,8 @@
   let pixi = $state(false);
   let app = $state();
   let canvas = $state();
-  let { displaceImages, projectHover, canvasWidth, canvasHeight } = $props();
-  let singlePaged = projectHover.singlePaged;
-  let previewUrl = urlFor(projectHover.preview.asset).width(720*res).url();  
+  let { displaceImages, singlePaged, preview, canvasWidth, canvasHeight, fitCover } = $props();
+  let previewUrl = urlFor(preview.asset).width(720*res).url();  
   let randomIndex = Math.floor(Math.random() * displaceImages.displaceImages.length);
   let displaceUrl = urlFor(displaceImages.displaceImages[randomIndex].asset).width(1080).url();
   let innerWidth = $state();
@@ -19,7 +18,7 @@
   
   async function renderPixi() {
     app = new Application();
-    await app.init({ background: '#fff', width: canvasWidth*res, height: Math.round(canvasWidth*res/projectHover.preview.asset.metadata.dimensions.aspectRatio), resolution: res, antialias:  true});
+    await app.init({ background: '#fff', width: canvasWidth*res, height: Math.round(canvasWidth*res/preview.asset.metadata.dimensions.aspectRatio), resolution: res, antialias:  true});
   
     if (canvas) {
       canvas.appendChild(app.canvas);
@@ -30,7 +29,7 @@
     let mainSprite = new Sprite(texture);
     mainSprite.anchor.set(0.5);
 	if (!app.stage?.children.includes(mainSprite)) {
-		app.stage.addChild(mainSprite);
+		app.stage?.addChild(mainSprite);
 	}
   
     // Load displacement texture
@@ -91,8 +90,12 @@
         // Calculate correct scale
         const scaleX = (canvasWidth * res) / texture.width + 0.01;
         const scaleY = (canvasHeight * res) / texture.height + 0.01;
-        const scale = Math.min(scaleX, scaleY);
-
+		let scale
+		if (fitCover) {
+			scale = Math.max(scaleX, scaleY);
+		} else {
+			scale = Math.min(scaleX, scaleY);
+		}
         mainSprite.scale.set(scale);
         mainSprite.x = (canvasWidth * res) / 2;
         mainSprite.y = (canvasHeight * res) / 2;
@@ -128,7 +131,7 @@
     id="canvas"
     bind:this={canvas}
     class:hidden={!domVisible}
-    style="aspect-ratio: {projectHover.preview.asset.metadata.dimensions.aspectRatio};"
+    style="aspect-ratio: {preview.asset.metadata.dimensions.aspectRatio};"
   ></div>
   
   <style>

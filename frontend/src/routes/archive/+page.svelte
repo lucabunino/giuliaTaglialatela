@@ -91,7 +91,7 @@ $effect(() => {
 		style="aspect-ratio: {commercialImg.asset.metadata.dimensions.aspectRatio}"
 		in:fade|global={{ duration: 50, delay: 50 }}
 		out:fade|global={{ duration: 50, delay: 50}}>
-			<Pixi displaceImages={data.displaceImages} projectHover={commercialHover} canvasWidth={canvasWidth} canvasHeight={canvasHeight}/>
+			<Pixi displaceImages={data.displaceImages} preview={commercialHover.preview} singlePaged={commercialHover.singlePaged} canvasWidth={canvasWidth} canvasHeight={canvasHeight}/>
 		</div>
 		{/key}
 	{/if}
@@ -104,7 +104,7 @@ $effect(() => {
 			style="aspect-ratio: {interiorImg.asset.metadata.dimensions.aspectRatio}"
 			in:fade|global={{ duration: 50, delay: 50 }}
 			out:fade|global={{ duration: 50, delay: 50}}>
-				<Pixi displaceImages={data.displaceImages} projectHover={interiorHover} canvasWidth={canvasWidth} canvasHeight={canvasHeight}/>
+				<Pixi displaceImages={data.displaceImages} preview={interiorHover.preview} singlePaged={interiorHover.singlePaged} canvasWidth={canvasWidth} canvasHeight={canvasHeight}/>
 			</div>
 		{/key}
 	{/if}

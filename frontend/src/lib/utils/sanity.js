@@ -8,7 +8,7 @@ if (!PUBLIC_SANITY_PROJECT_ID || !PUBLIC_SANITY_DATASET) {
 export const client = createClient({
 	projectId: PUBLIC_SANITY_PROJECT_ID,
 	dataset: PUBLIC_SANITY_DATASET,
-	useCdn: true, // `false` if you want to ensure fresh data
+	useCdn: false, // `false` if you want to ensure fresh data
 	apiVersion: '2025-03-19', // date of setup
 });
 
@@ -216,6 +216,14 @@ export async function getInfo() {
 		`
 		*[_type == "info" && !(_id in path('drafts.**'))][0] {
 			...,
+			aboutImages[] {
+				asset->{
+					_ref, _id, _type,
+					title,
+					description,
+					altText,
+					metadata {dimensions}
+				}}
 		}
 		`
 	);

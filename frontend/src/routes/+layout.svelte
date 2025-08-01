@@ -297,8 +297,8 @@ function handleKey({key}) {if (key === 'G' && dev) {viewGrid = !viewGrid}}
 
 /* Main */
 main {
-  min-height: calc(100vh - 3.431rem);
-  min-height: calc(100svh - 3.431rem);
+  min-height: calc(100vh - 1.431rem - var(--margin));
+  min-height: calc(100svh - 1.431rem - var(--margin));
 }
 
 /* Footer */
@@ -309,7 +309,7 @@ footer {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  margin-bottom: 2em;
+  margin-bottom: var(--margin);
   z-index: 2;
   position: relative;
 }
