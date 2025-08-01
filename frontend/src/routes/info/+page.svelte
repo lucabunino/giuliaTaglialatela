@@ -76,6 +76,7 @@ let canvasHeight = $state(625)
 	-webkit-column-gap: var(--gutter);
 		-moz-column-gap: var(--gutter);
 			column-gap: var(--gutter);
+	row-gap: -moz-calc(var(--gutter)/2);
 	row-gap: calc(var(--gutter)/2);
 }
 p {
@@ -90,17 +91,25 @@ ul {
 }
 .image-wrapper {
 	aspect-ratio: .8;
+	width: -moz-calc(((100% - var(--margin)*2 - var(--gutter)*11)/12) * 4 + var(--gutter)*3);
 	width: calc(((100% - var(--margin)*2 - var(--gutter)*11)/12) * 4 + var(--gutter)*3);
 	position: absolute;
 	bottom: var(--margin);
 	right: var(--margin);
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
 	display: flex;
-	align-items: center;
+	-webkit-box-align: center;
+	   -moz-box-align: center;
+	    -ms-flex-align: center;
+	        align-items: center;
 }
 .preview, .target {
 	width: 100%;
 	height: 100%;
-	object-fit: cover;
+	-o-object-fit: cover;
+	   object-fit: cover;
 	cursor: pointer;
 	position: absolute;
 }
@@ -147,14 +156,21 @@ p {
 	width: 100%;
 	bottom: unset;
 	right: unset;
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
 	display: flex;
-	align-items: center;
+	-webkit-box-align: center;
+	   -moz-box-align: center;
+	    -ms-flex-align: center;
+	        align-items: center;
 	margin-top: 2rem;
 }
 .preview, .target {
 	width: 100%;
 	height: 100%;
-	object-fit: cover;
+	-o-object-fit: cover;
+	   object-fit: cover;
 	cursor: pointer;
 	position: absolute;
 }
