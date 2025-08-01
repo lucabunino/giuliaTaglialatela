@@ -55,8 +55,8 @@ let canvasHeight = $state(625)
 			{#key aboutImage}
 				<div
 				class="preview"
-				in:fade|global={{ duration: 100, delay: 0 }}
-				out:fade|global={{ duration: 100, delay: 50}}
+				in:fade|global={{ duration: 100, delay: 100 }}
+				out:fade|global={{ duration: 100, delay: 200 }}
 				>
 					<Pixi displaceImages={data.displaceImages} preview={aboutImage} singlePaged={true} canvasWidth={canvasWidth} canvasHeight={canvasHeight} fitCover={true}/>
 				</div>
