@@ -113,6 +113,10 @@ ul {
 	cursor: pointer;
 	position: absolute;
 }
+.target {
+	visibility: hidden;
+	opacity: 0;
+}
 .counter {
 	position: absolute;
 	top: .5em;
