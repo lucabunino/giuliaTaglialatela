@@ -8,5 +8,5 @@ let { data, menuOpen } = $props()
 </svelte:head>
 
 <section id="commercials">
-  <SwiperContainer index={1} menuOpen={menuOpen} projects={data.commercials}/>
+  <SwiperContainer index={1} menuOpen={menuOpen} projects={data.commercials} captionHidden={true}/>
 </section>
