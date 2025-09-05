@@ -2,6 +2,7 @@
 import Pixi from '$lib/components/Pixi.svelte'
 import { fade } from "svelte/transition";
 import { urlFor } from '$lib/utils/image';
+import { div } from 'three/tsl';
 let { data } = $props()
 
 let indexPortrait = $state(0)
@@ -10,7 +11,16 @@ let aboutImage = $derived(data.info.aboutImages?.[indexPortrait])
 let innerWidth = $state()
 let canvasWidth = $state(500)
 let canvasHeight = $state(625)
+let hoverImg = $state(false)
+
+let mouse = $state({})
+function handleMousemove(event) {	
+	mouse.x = event.clientX;
+	mouse.y = event.clientY;
+}
 </script>
+
+<svelte:window bind:innerWidth></svelte:window>
 
 <svelte:head>
 {#if data.seo[0].SEOTitle}<title>{data.seo[0].SEOTitle} | Info</title>{/if}
@@ -52,16 +62,43 @@ let canvasHeight = $state(625)
 		}}
 		>
 			<img class="target" src={urlFor(aboutImage).width(1080)} alt={aboutImage.asset.altText} bind:clientWidth={canvasWidth} bind:clientHeight={canvasHeight} >
+			<div class="image"
+			onmouseenter={() => {hoverImg = true}}
+			onmouseleave={() => {hoverImg = false}}
+			onmousemove={(e) => {handleMousemove(e)}}
+			>
 			{#key aboutImage}
-				<div
-				class="preview"
-				in:fade|global={{ duration: 100, delay: 100 }}
-				out:fade|global={{ duration: 100, delay: 200 }}
-				>
-					<Pixi displaceImages={data.displaceImages} preview={aboutImage} singlePaged={true} canvasWidth={canvasWidth} canvasHeight={canvasHeight} fitCover={true}/>
-				</div>
+				{#if innerWidth > 700}
+					{#if hoverImg}
+						<div
+						class="preview"
+						>
+							<div
+							in:fade|global={{ duration: 100, delay: 0 }}
+							out:fade|global={{ duration: 100, delay: 0 }}
+							>
+								<Pixi displaceImages={data.displaceImages} preview={aboutImage} singlePaged={false} canvasWidth={canvasWidth} canvasHeight={canvasHeight} fitCover={true}/>
+							</div>
+						</div>
+					{:else}
+						<img
+						in:fade|global={{ duration: 0, delay: 0 }}
+						out:fade|global={{ duration: 100, delay: 200 }}
+						class="still" src={urlFor(aboutImage).width(1080)} alt={aboutImage.asset.altText} bind:clientWidth={canvasWidth} bind:clientHeight={canvasHeight} >
+					{/if}
+				{:else}
+					<div class="preview"
+					in:fade|global={{ duration: 100, delay: 100 }}
+					out:fade|global={{ duration: 100, delay: 100 }}
+					>
+						<Pixi displaceImages={data.displaceImages} preview={aboutImage} singlePaged={true} canvasWidth={canvasWidth} canvasHeight={canvasHeight} fitCover={true}/>
+					</div>
+				{/if}
 			{/key}
-			<span class="counter honeymoon-120">{indexPortrait+1}/{data.info.aboutImages?.length}</span>
+			</div>
+			<span class="counter honeymoon-120"
+			style="left: {mouse.x}px;top: {mouse.y}px;"
+			>{indexPortrait+1}/{data.info.aboutImages?.length}</span>
 		</div>
 	{/if}
 </section>
@@ -117,13 +154,23 @@ ul {
 	visibility: hidden;
 	opacity: 0;
 }
-.counter {
+.image {
+	width: 100%;
+	height: 100%;
+}
+.still {
 	position: absolute;
-	top: .5em;
-	left: -.5em;
+	z-index: -1;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+.counter {
+	position: fixed;
 	z-index: 2;
 	pointer-events: none;
 	opacity: 0;
+	transform: translateX(-130%) translateY(-50%);
 }
 .image-wrapper:hover .counter {
 	opacity: 1;
@@ -177,12 +224,18 @@ p {
 	   object-fit: cover;
 	cursor: pointer;
 	position: absolute;
+	border: solid 1px red;
+}
+.still {
+	display: none;
 }
 .counter {
-	top: -.5em;
-	left: unset;
+	position: absolute;
+	top: -.5em !important;
+	left: unset !important;
 	right: 0;
 	opacity: 1;
+	transform: none;
 }
 }
 </style>

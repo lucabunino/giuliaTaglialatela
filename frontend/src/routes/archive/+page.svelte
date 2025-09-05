@@ -82,7 +82,7 @@ $effect(() => {
 	{/if}
 	{/each}
 
-		{#if lastHover === "commercial"}
+	{#if lastHover === "commercial"}
 	<img class="target" src={urlFor(commercialImg).width(1080)} alt={commercialImg.asset.altText} bind:clientWidth={canvasWidth} bind:clientHeight={canvasHeight} style="aspect-ratio: {commercialImg.asset.metadata.dimensions.aspectRatio}">
 	{#if domLoaded}
 		{#key commercialImg}
