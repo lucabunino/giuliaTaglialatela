@@ -224,7 +224,6 @@ p {
 	   object-fit: cover;
 	cursor: pointer;
 	position: absolute;
-	border: solid 1px red;
 }
 .still {
 	display: none;
