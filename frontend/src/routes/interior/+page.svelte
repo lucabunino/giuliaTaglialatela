@@ -9,5 +9,5 @@ $inspect(data)
 </svelte:head>
 
 <section id="interiors">
-  <SwiperContainer index={2} menuOpen={menuOpen} projects={data.interiors}/>
+  <SwiperContainer index={2} menuOpen={menuOpen} projects={data.interiors} captionHidden={true}/>
 </section>

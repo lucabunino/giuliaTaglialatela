@@ -62,7 +62,7 @@ function handleKey({key}) {if (key === 'G' && dev) {viewGrid = !viewGrid}}
   <meta name="googlebot" content="index,follow">
   {#if data.seo[0].SEOTitle}<meta property="og:title" content={data.seo[0].SEOTitle}>{/if}
   {#if data.seo[0].SEODescription}<meta property="og:description" content={data.seo[0].SEODescription}>{/if}
-  {#if data.seo[0].SEOImage}<meta property="og:image" content={urlFor(data.seo[0].SEOImage).width(2000).url()}>{/if}
+  {#if data.seo[0].SEOImage}<meta property="og:image" content={urlFor(data.seo[0].SEOImage).width(1200).url()}>{/if}
   <meta property="og:url" content={$page.url}>
   <meta property="og:type" content="website">
   {#if data.seo[0].SEOTitle}<meta property="og:site_name" content={data.seo[0].SEOTitle}>{/if}
@@ -297,8 +297,8 @@ function handleKey({key}) {if (key === 'G' && dev) {viewGrid = !viewGrid}}
 
 /* Main */
 main {
-  min-height: calc(100vh - 3.431rem);
-  min-height: calc(100svh - 3.431rem);
+  min-height: calc(100vh - 1.431rem - var(--margin));
+  min-height: calc(100svh - 1.431rem - var(--margin));
 }
 
 /* Footer */
@@ -309,7 +309,7 @@ footer {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  margin-bottom: 2em;
+  margin-bottom: var(--margin);
   z-index: 2;
   position: relative;
 }

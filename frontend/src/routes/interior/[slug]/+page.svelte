@@ -35,13 +35,14 @@ let { data } = $props()
      -moz-column-gap: var(--gutter);
           column-gap: var(--gutter);
   position: relative;
-  margin-bottom: -3em;
+  margin-bottom: calc(-1.431rem - var(--margin));
   z-index: -1;
 }
 .project-info {
   position: fixed;
   margin: 13em var(--margin);
   max-width: 600px;
+  z-index: 2;
 }
 .images {
   -ms-grid-column: 5;

@@ -12,7 +12,6 @@ let innerHeight = $state();
 
 let projectsElements = $state([]);
 let aboveElements = $state([]);
-$inspect(aboveElements)
 
 function handleScroll() {
   let threshold = innerHeight * .05;
