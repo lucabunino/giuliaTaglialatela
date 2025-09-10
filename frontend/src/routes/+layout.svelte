@@ -92,7 +92,7 @@ function handleKey({key}) {if (key === 'G' && dev) {viewGrid = !viewGrid}}
         <a href={data.settings.instagramUrl} target="_blank" rel="noopener noreferrer">Ig</a>
       </li>
     </ul>
-    <button class="menu-switch" aria-label="Menu" class:arrow={$page.url.pathname.includes("/archive/")} onclick={(e) => {
+    <button class="menu-switch" aria-label="Menu" class:arrow={["/commercial/", "/interior/"].some(path => $page.url.pathname.includes(path))} onclick={(e) => {
       if ($page.url.pathname.includes("/archive/")) {
         if (canGoBack) {
           history.back()
