@@ -93,7 +93,7 @@ function handleKey({key}) {if (key === 'G' && dev) {viewGrid = !viewGrid}}
       </li>
     </ul>
     <button class="menu-switch" aria-label="Menu" class:arrow={["/commercial/", "/interior/"].some(path => $page.url.pathname.includes(path))} onclick={(e) => {
-      if ($page.url.pathname.includes("/archive/")) {
+      if (["/commercial/", "/interior/"].some(path => $page.url.pathname.includes(path))) {
         if (canGoBack) {
           history.back()
         } else {
